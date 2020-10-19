@@ -66,16 +66,16 @@ IE 自从 IE6就支持 defer 标签，如：
 这种方式可能是用的最多的了。
 ```
 function loadjs(script_filename) {
-	var script = document.createElement('script');
-	script.setAttribute('type', 'text/javascript');
-	script.setAttribute('src', 'script_filename);
-	script.setAttribute('id', 'coolshell_script_id');
+  var script = document.createElement('script');
+  script.setAttribute('type', 'text/javascript');
+  script.setAttribute('src', 'script_filename);
+  script.setAttribute('id', 'coolshell_script_id');
 
-	script_id = document.getElementById('coolshell_script_id');
-	if (script_id) {
-		document.getElementsByTagName('head')[0].removeChild(script_id);
-	}
-	document.getElementsByTagName('head')[0].appendChild(script);
+  script_id = document.getElementById('coolshell_script_id');
+  if (script_id) {
+    document.getElementsByTagName('head')[0].removeChild(script_id);
+  }
+  document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 var script = 'https://coolshell.cn/asyncjs/alert.js';
@@ -132,12 +132,12 @@ script.execute();
 所以我们需要再 hack 一下，就像 N 多年前玩 preload 图片那样，我们可以动用 object 标签（也可以动用 iframe 标签），于是我们又下面这样的代码：
 ```
 function cachejs(script_filename) {
-	var cache = document.createElement('object');
-	cache.data = script_filename;
-	cache.id = "collshell_script_cache_id";
-	cache.width: 0;
-	cache.height = 0;
-	document.body.appendChild(cache);
+  var cache = document.createElement('object');
+  cache.data = script_filename;
+  cache.id = "collshell_script_cache_id";
+  cache.width: 0;
+  cache.height = 0;
+  document.body.appendChild(cache);
 }
 ```
 

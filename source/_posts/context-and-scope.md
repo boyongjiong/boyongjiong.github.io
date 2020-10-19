@@ -7,7 +7,7 @@ categories: 技术向
 
 JavaScript对于作用域（Scope）和上下文（Context）的实现市这门语言的一个非常独到的地方，部分归功于其独特的灵活性。函数可以接收不同的上下文和作用域。这些概念为JavaScript中的很多强大的设计模式提供了坚实的基础。然而这些概念也非常容易给开发人员带来困惑。为此，本文将全面剖析这些概念，并阐述不用的设计模式是如何利用它们的。
 
-### 上下文（Context）和作用域（Scope）
+## 上下文（Context）和作用域（Scope）
 首先需要知道的是，上下文和作用域是两个完全不同的概念。多年来，我发现很多开发者会混淆这两个概念，错误的将两个概念混淆了。平心而论，这些年来很多术语都被混乱的使用了。
 
 函数的每次调用都有与之紧密相关的作用域和上下文。从根本上来说，作用域是基于函数的，而上下文是基于对象的。换句话说，作用域涉及到所被调用函数中的变量访问，并且不用的调用场景是不一样的。上下文始终是`this`关键字的值，它是拥有（控制）当前所执行代码的对象的引用。
@@ -98,8 +98,8 @@ changeColor();
 // 这里只能访问color
 console.log("Color is now " + color);
 ```
-上述代码一共包括三个执行环境： 全局环境、changeColor()的局部环境、swapColors()的局部环境。上述程序的作用域链如下图所示
-![cmd-markdown-logo](http://7xpv9g.com1.z0.glb.clouddn.com/imgscope-chain.png)
+上述代码一共包括三个执行环境： 全局环境、changeColor()的局部环境、swapColors()的局部环境。
+
 从上图发现。内部环境可以通过作用域链访问所有的外部环境，但是外部环境不能访问内部环境中的任何变量和函数。这些环境之间的联系是线性的、有次序的。
 对于标识符解析（变量名或函数名搜索）是沿着作用域链一级一级地搜索标识符的过程。搜索过程始终从作用域链的前端开始，然后逐级的向后（全局执行环境）回溯，直到找到标识符为止。
 
@@ -280,10 +280,10 @@ hello('weiwei', function(a) {
 });
 ```
 
-### 小结
+## 小结
 在你学习高级的设计模式之前，理解这些概念非常的重要，因为作用域和上下文在现代JavaScript中扮演着最基本的角色。无论我们谈论的是闭包、面向对象、继承、或者是各种原生实现，上下文和作用域都在其中扮演着至关重要的角色。如果你的目标是精通JavaScript语言，并且深入的理解它的各个组成，那么作用域和上下文便是你的起点。
 
-### 参考资料
+## 参考资料
  - [Understanding Scope and Context in JavaScript](http://ryanmorr.com/understanding-scope-and-context-in-javascript/)
  - JavaScript 高级程序设计，section 4.2
  - [Arrow function vs. bind()](http://www.2ality.com/2016/02/arrow-functions-vs-bind.html)

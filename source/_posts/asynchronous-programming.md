@@ -28,7 +28,7 @@ function f1(callback){
     // f1的任务代码
     callback();
   }, 1000);
-　}
+}
 
 f1(f2);
 ```

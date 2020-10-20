@@ -106,7 +106,7 @@ theme_config:
     projects: projects_url
   social_links:
     github: https://github.com/boyongjiong
-Z    linkedin: https://www.linkedin.com/in/yongjiong-bo-639368aa/
+    linkedin: https://www.linkedin.com/in/yongjiong-bo-639368aa/
     mail: boyongjiong@gmail.com
 
 # Deployment

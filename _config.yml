@@ -99,6 +99,10 @@ projects_url: http://github.com/boyongjiong
 theme: cactus
 theme_config:
   colorscheme: light
+  posts_overview:
+    show_all_posts: false
+    post_count: 7
+    sort_updated: false
   nav:
     home: /
     about: /about/

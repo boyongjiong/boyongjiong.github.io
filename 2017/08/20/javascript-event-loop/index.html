@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://tvax3.sinaimg.cn/large/a9034e0egy1gk2wgk0o0wj20gp0endg6.jpg">
 <meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1gk2wgk0o0wj20gp0endg6.jpg">
 <meta property="article:published_time" content="2017-08-20T04:41:11.000Z">
-<meta property="article:modified_time" content="2020-10-26T10:24:54.849Z">
+<meta property="article:modified_time" content="2020-10-26T14:02:06.464Z">
 <meta property="article:author" content="boyongjiong">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content=" React">
@@ -170,7 +170,7 @@
 <p>于是，所有的任务可以分为两种，一种是同步任务（synchronous），另一种是异步任务（Asynchronous）。同步任务指的是，在主线程上排队的任务，只有前一个任务执行完毕，才能执行后一个任务；异步任务指的是，不进入主线程、而进入“任务队列”(task queue)的任务，只有“任务队列”通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。</p>
 <p>具体来说，异步任务的运行机制如下（同步执行也是如此，因为它可以被视为没有异步任务的异步执行。）</p>
 <blockquote>
-<p>1.所有同步任务都在主线程上执行，形成一个执行栈(execution context stack)<br>  2.主线程之外，还存在一个“任务队列”(task queue)。只要异步任务有了运行结果，就在“任务队列”中放置一个事件。<br>  3.一旦“执行栈”中的所有同步任务执行完毕，系统就会读取“任务队列”，看看里面有哪些事件。那些对应的异步任务，于是结束等待时间，进入执行栈，开始执行。<br>  4.主线程不断重复上面的第三步。</p>
+<p>1.所有同步任务都在主线程上执行，形成一个执行栈(execution context stack)<br>2.主线程之外，还存在一个“任务队列”(task queue)。只要异步任务有了运行结果，就在“任务队列”中放置一个事件。<br>3.一旦“执行栈”中的所有同步任务执行完毕，系统就会读取“任务队列”，看看里面有哪些事件。那些对应的异步任务，于是结束等待时间，进入执行栈，开始执行。<br>4.主线程不断重复上面的第三步。</p>
 </blockquote>
 <p>下图就是主线程和任务队列的示意图</p>
 <p><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1gk2wgjvtsuj20g50boq3q.jpg" alt="主线程和任务队列的示意图"><br>主要线程空了，就回去读取“任务队列”，这就是JavaScript的运行机制。这个过程会不断重复。</p>
@@ -201,12 +201,10 @@
 <p>根据上图，Node.js的运行机制如下：</p>
 <blockquote>
 <ol>
-<li>V8引擎解析JavaScript脚本<ol start="2">
+<li>V8引擎解析JavaScript脚本</li>
 <li>解析后的代码，调用Node API</li>
 <li>libuv 库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop(事件循环)，以异步的方式将任务的执行结果返回给V8引擎。</li>
 <li>V8引擎再将结果返回给用户。</li>
-</ol>
-</li>
 </ol>
 </blockquote>
 <p>除了setTimeout 和 setInterval这两个方法，Node.js还提供了另外两个与“任务队列”有关的方法：process.nextTick 和 setImmediate。它们可以帮助我们加深对“任务队列”的理解。</p>

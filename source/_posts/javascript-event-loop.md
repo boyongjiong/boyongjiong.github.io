@@ -34,7 +34,7 @@ JavaScript语言的设计者意识到，这时主线程完全可以不管IO设�
   
 下图就是主线程和任务队列的示意图
 
-![主线程和任务队列的示意图](http://image.beekka.com/blog/2014/bg2014100801.jpg)
+![主线程和任务队列的示意图](https://tvax4.sinaimg.cn/large/a9034e0egy1gk2wgjvtsuj20g50boq3q.jpg)
 主要线程空了，就回去读取“任务队列”，这就是JavaScript的运行机制。这个过程会不断重复。
 
 ## 三、事件和回调函数
@@ -50,7 +50,7 @@ JavaScript语言的设计者意识到，这时主线程完全可以不管IO设�
 主线程从“任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为Event Loop（事件循环）。
 
 为了更好的理解Event Loop，请看下图
-![Event Loop](http://image.beekka.com/blog/2014/bg2014100802.png)
+![Event Loop](https://tvax3.sinaimg.cn/large/a9034e0egy1gk2wgk0o0wj20gp0endg6.jpg)
 上图中，主线程运行的时候，产生堆(heap)和栈(stack)，栈中的代码调用各种外部API，他们在“任务队列”中加入各种事件(click,load,done)。只要栈中的代码执行完毕，主线程就回去读取“任务队列”，依次执行那些事件所对应的回调函数。
 
 执行栈中的代码（同步代码），总是在读取“任务队列”之前执行。请看下面这个例子。
@@ -101,7 +101,7 @@ HTML5标准规定了setTimeout()的第二个参数的最小值（最短间隔）
 
 ## 六、Node.js 的Event Loop
 Node.js 也是单线程的Event Loop，但是他的运行机制不同于浏览器环境。
-![Node.js 的Event Loop](http://image.beekka.com/blog/2014/bg2014100803.png)
+![Node.js 的Event Loop](https://tvax4.sinaimg.cn/large/a9034e0egy1gk2wgk0o0wj20gp0endg6.jpg)
 
 根据上图，Node.js的运行机制如下：
 > 1. V8引擎解析JavaScript脚本

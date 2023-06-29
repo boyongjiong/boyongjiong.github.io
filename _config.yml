@@ -117,5 +117,5 @@ theme_config:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/boyongjiong/boyongjiong.github.io
+  repo: git@github.com:boyongjiong/boyongjiong.github.io.git
   branch: gh-pages

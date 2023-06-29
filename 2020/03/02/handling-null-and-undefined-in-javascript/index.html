@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="「原译文」如何在 JavaScript 中处理 null 和 undefined？「原文」handling null and undefined in javascript  在 JavaScript 的开发工作中，许多开发人员都头疼的一个问题就是处理可选值。怎样才能最大程度减少由 null、undefined，或在运行时未初始化的值引发的错误，有哪些最佳策略呢？  有些语言针对这类情况有内置的解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？">
+<meta property="og:url" content="r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="「原译文」如何在 JavaScript 中处理 null 和 undefined？「原文」handling null and undefined in javascript  在 JavaScript 的开发工作中，许多开发人员都头疼的一个问题就是处理可选值。怎样才能最大程度减少由 null、undefined，或在运行时未初始化的值引发的错误，有哪些最佳策略呢？  有些语言针对这类情况有内置的解">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-02T04:59:00.000Z">
+<meta property="article:modified_time" content="2023-06-29T13:27:54.454Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/05/26/charles-https-display-issue-in-ios/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&text=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&is_video=false&description=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？&body=Check out this article: r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&name=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&t=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用户输入"><span class="toc-number">1.</span> <span class="toc-text">用户输入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#避免创建-null-和-undefined-值"><span class="toc-number">2.</span> <span class="toc-text">避免创建 null 和 undefined 值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免-null"><span class="toc-number">2.1.</span> <span class="toc-text">避免 null</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新的-JavaScript-功能"><span class="toc-number">2.2.</span> <span class="toc-text">新的 JavaScript 功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空位合并运算符"><span class="toc-number">2.3.</span> <span class="toc-text">空位合并运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Promise-实现异步-Either"><span class="toc-number">2.4.</span> <span class="toc-text">使用 Promise 实现异步 Either</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用数组实现-Maybe"><span class="toc-number">2.5.</span> <span class="toc-text">使用数组实现 Maybe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#作者介绍"><span class="toc-number">3.</span> <span class="toc-text">作者介绍</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        &lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-02T04:59:00.000Z" itemprop="datePublished">2020-03-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><a href="https://www.infoq.cn/article/tsfJmMq4sPa9kmsBKypY" target="_blank" rel="noopener">「原译文」如何在 JavaScript 中处理 null 和 undefined？</a><br><a href="https://medium.com/javascript-scene/handling-null-and-undefined-in-javascript-1500c65d51ae" target="_blank" rel="noopener">「原文」handling null and undefined in javascript</a></p>
+<blockquote>
+<p>在 JavaScript 的开发工作中，许多开发人员都头疼的一个问题就是处理可选值。怎样才能最大程度减少由 null、undefined，或在运行时未初始化的值引发的错误，有哪些最佳策略呢？</p>
+</blockquote>
+<p>有些语言针对这类情况有内置的解决方案。在某些静态类型的语言中，你可以认定 null 和 undefined 是非法值，并且让你的编程语言在编译时抛出 TypeError。但即使在这种语言中，也不能阻止 null 输入在运行时流入程序。</p>
+<p>为了更好的处理这种问题，我们需要了解这些值的来源。一下是一些最常见的来源：</p>
+<ul>
+<li>用户输入；</li>
+<li>数据库/网络记录；</li>
+<li>未初始化的状态；</li>
+<li>无法返回任何内容的函数。</li>
+</ul>
+<h2 id="用户输入"><a href="#用户输入" class="headerlink" title="用户输入"></a>用户输入</h2><p>在处理用户输入时，验证是第一道也是最好的防线。我经常依靠 schema 验证器来完成这项工作。比如，你可以试试 react-jsonschema-form。</p>
+<p><strong>对输入的记录做 hydrate 处理</strong><br>我总是会把从网络、数据库或者用户输入中获得的输入传递给一个 hydrating 函数。例如，我会使用可以处理 undefined 值得 redux 动作创建者来 hydrate 用户记录：</p>
+<p><a href="https://medium.com/javascript-scene/10-tips-for-better-redux-architecture-69250425af44" target="_blank" rel="noopener">https://medium.com/javascript-scene/10-tips-for-better-redux-architecture-69250425af44</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> setUser = <span class="function">(<span class="params">&#123; name = <span class="string">'Anonymous'</span>, avatar = <span class="string">'anon.png'</span> &#125; = &#123;&#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  type: setUser.type,</span><br><span class="line">  payload: &#123;</span><br><span class="line">    name,</span><br><span class="line">    avatar,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">setUser.type = <span class="string">'userReducer/setUser'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>有时，你需要根据数据的当前状态显示不同的内容。如果页面可以在所有数据初始化完毕之前显示，就可能会遇到这种情况。例如，当你想用户显示资金金额时，有时可能会在加载数据之前显示余额为 0。这种事情我见过很多次，这会让用户感到不安。你可创建一些自定义的数据类型，这些数据类型根据当前状态生成不同的输出。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createBalance = (&#123;</span><br><span class="line">  <span class="comment">// 默认状态</span></span><br><span class="line">  state = <span class="string">'uninitialized'</span>,</span><br><span class="line">  value = createBalance.empty,</span><br><span class="line">&#125; = &#123;&#125;) =&gt; createBalance.isValidState(state) &amp;&amp; (&#123;</span><br><span class="line">  __proto__: &#123;</span><br><span class="line">    uninitialized: <span class="function"><span class="params">()</span> =&gt;</span> <span class="string">'--'</span>,</span><br><span class="line">    initialized: <span class="function"><span class="params">()</span> =&gt;</span> value,</span><br><span class="line">    format() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.getState();</span><br><span class="line">    &#125;,</span><br><span class="line">    getState: <span class="function"><span class="params">()</span> =&gt;</span> state,</span><br><span class="line">    <span class="keyword">set</span>: value =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> test = <span class="built_in">Number</span>(value);</span><br><span class="line">      assert(!<span class="built_in">Number</span>.isNaN(test), <span class="string">`setBalance Invalid value: <span class="subst">$&#123;value&#125;</span>`</span>);</span><br><span class="line">      <span class="keyword">return</span> createBalance(&#123;</span><br><span class="line">        state: <span class="string">'initialized'</span>,</span><br><span class="line">        value</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">createBalance.empty = <span class="string">'0'</span>;</span><br><span class="line">createBalance.isValidState = <span class="function"><span class="params">state</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (![<span class="string">'uninitialized'</span>, <span class="string">'initialized'</span>].includes(state)) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`createBalance Invalid state: <span class="subst">$&#123;state&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> setBalance = <span class="function"><span class="params">value</span> =&gt;</span> createBalance().set(value);</span><br><span class="line"><span class="keyword">const</span> emptyBalanceForDisplay = createBalance()</span><br><span class="line">  .format();</span><br><span class="line"><span class="built_in">console</span>.log(emptyBalanceForDisplay); <span class="comment">// '--'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> balanceForDisplay = setBalance(<span class="string">'25'</span>)</span><br><span class="line">  .format(balance);</span><br><span class="line"><span class="built_in">console</span>.log(balanceForDisplay); <span class="comment">// '25'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 取消下面调用的注释前缀就能看到错误示例</span></span><br><span class="line"><span class="comment">//  setBalance('foo'); // Error: setBalance Invalid value: foo</span></span><br><span class="line"><span class="comment">//  Error: createBalance Invalid state: THIS IS NOT VALID</span></span><br><span class="line"><span class="comment">//  createBalance(&#123; state: 'THIS IS NOT VALID', value: '0' &#125;);</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码是一个状态机，其设计无法显示无效状态。首次创建余额数字时，它将被设置为一个 uninitialized 状态。如果你尝试在 uninitialized 状态时显示余额，则只会获得一个占位符值（”–“）。要调整这个设置，你必须调用 .set 方法，或调用我们在 createBalance 下面定义的 setBalance 捷径来显式设置一个值。</p>
+<p>该状态本身经过封装，以保护其免受外界干扰，这样其它函数就无法捕获它并将其设置为无效状态了。</p>
+<blockquote>
+<p>注意：想知道为什么我们使用字符串而不是数字吗？那是因为我用了精度很高的大数字符串来表示货币类型，以避免舍入错误，并能准确的表示加密货币交易中的数值（这类交易中的数值精度要求可能会非常高）。</p>
+</blockquote>
+<p>如果你使用 Redux 或 Redux 架构，则可以使用 <a href="https://github.com/ericelliott/redux-dsm" target="_blank" rel="noopener">Redux-DSM</a> 来声明状态机。</p>
+<h2 id="避免创建-null-和-undefined-值"><a href="#避免创建-null-和-undefined-值" class="headerlink" title="避免创建 null 和 undefined 值"></a>避免创建 null 和 undefined 值</h2><p>在你自己的函数中，你可以尽量避免创建 null 或 undefined 值。我想到了很多 JavaScript 的内置方法来做到这一点，见下文。</p>
+<h3 id="避免-null"><a href="#避免-null" class="headerlink" title="避免 null"></a>避免 null</h3><p>我从未在 JavaScript 中显式创建 null 值，因为我觉得用两个不同的原始值来表示 ”这个值不存在“，实在是没什么意义的事情。</p>
+<p>自 2015 年开始 JavaScript 就支持默认值了，当你没有为相关参数或者属性提供值时，它们就会装填默认值。这些默认值不适用于 null 值。根据我的经验，这通常会导致一个错误。为了避免这种陷阱，请不要再 JavaScript 中使用 null。</p>
+<p>如果你希望处理未初始化的值或空值这类特殊情况，状态机是更好的选择，如前所述。</p>
+<h3 id="新的-JavaScript-功能"><a href="#新的-JavaScript-功能" class="headerlink" title="新的 JavaScript 功能"></a>新的 JavaScript 功能</h3><p>有几个功能可以帮助你处理 null 或 undefined 值。在撰写本文时，下面两个功能都是第三阶段的提案，将来你看到本文时，这两个功能可能已经正式发布了。</p>
+<p>目前，可选链（optional chaining） 时第 3 阶段的提案。它的工作机制是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = &#123;&#125;;</span><br><span class="line"><span class="comment">// console.log(foo.bar.baz); // throw error</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.bar?.baz); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>(关于可选链的更多细节，可以参考前段之巅之前的一片文章<a href="https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247492849&idx=2&sn=c081a0a944abffd30d3a0ef9695a9333&scene=21#wechat_redirect" target="_blank" rel="noopener">《了解 JavaScript 新特性：Optional Chaining》</a>)</p>
+<h3 id="空位合并运算符"><a href="#空位合并运算符" class="headerlink" title="空位合并运算符"></a>空位合并运算符</h3><p>这也是准备添加到规范中的第 3 阶段提案，”空位合并运算符（Nullish Coalescing Operator）“ 基本上是”回退值运算符“ 的一种高大上的说法。如果左侧的值是 undefined 或 null, 则其会等于右侧的值。他的工作机制是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> baz;</span><br><span class="line"><span class="built_in">console</span>.log(baz); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(baz ?? <span class="string">'default baz'</span>);</span><br><span class="line"><span class="comment">// default baz</span></span><br><span class="line"><span class="comment">// Combine with optional chaining:</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.bar?.baz ?? <span class="string">'default baz'</span>); <span class="comment">// default baz</span></span><br></pre></td></tr></table></figure>
+
+<p>目前提案尚未正式进入规范，所以你需要安装 @babel/plugin-proposal-optional-chaining 和 @babel/plugin-proposal-nullish-coalescing-operator。</p>
+<h3 id="使用-Promise-实现异步-Either"><a href="#使用-Promise-实现异步-Either" class="headerlink" title="使用 Promise 实现异步 Either"></a>使用 Promise 实现异步 Either</h3><p>如果某个函数可能不返回值，则最好将其包装在一个 Either 中。在函数式编程中，Either monad 是一种特殊的抽象数据类型，称为 Promise。你可以用它对 undefined 值进行声明式错误分支：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> exists = <span class="function"><span class="params">x</span> =&gt;</span> x != <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">const</span> ifExists = <span class="function"><span class="params">value</span> =&gt;</span> exists(value) ?</span><br><span class="line">  <span class="built_in">Promise</span>.resolve(value) :</span><br><span class="line">  <span class="built_in">Promise</span>.reject(<span class="string">`Invalid value: <span class="subst">$&#123;value&#125;</span>`</span>);</span><br><span class="line">ifExists(<span class="literal">null</span>).then(log).catch(log); <span class="comment">// Invalid value: null;</span></span><br><span class="line">ifExists(<span class="string">'hello'</span>).then(log).catch(log); <span class="comment">// hello</span></span><br></pre></td></tr></table></figure>
+
+<p>你可以根据需要编写一个同步版本，但这里我还用不到那一步，就留给你做练习吧。如果你在 functor 和 monad 方面有良好的基础，那么这个过程会很容易。如果这听起来很吓人，那也不用担心，只用 Promise 即可。它们是内置的，并且在大多数情况下都可以正常工作。</p>
+<h3 id="使用数组实现-Maybe"><a href="#使用数组实现-Maybe" class="headerlink" title="使用数组实现 Maybe"></a>使用数组实现 Maybe</h3><p>数组实现了一个 map 方法，这个方法会使用一个函数应用在数组的每个元素上。如果数组为空，则这个函数永远不会被调用。换句话说，JavaScript 中的数组可以充当 Haskell 等语言中的 Maybe 角色。</p>
+<p><em>Maybe 是什么？</em><br>Maybe 是一种特殊的抽象数据类型，它封装了一个可选值。数据类型有两种形式：</p>
+<ul>
+<li>Just - 包含一个值的 Maybe</li>
+<li>Nothing - 没有值得 Maybe</li>
+</ul>
+<p>下面是具体的机制：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> log = <span class="function"><span class="params">x</span> =&gt;</span> <span class="built_in">console</span>.log(x);</span><br><span class="line"><span class="keyword">const</span> exists = <span class="function"><span class="params">x</span> =&gt;</span> x != <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">const</span> Just = <span class="function"><span class="params">value</span> =&gt;</span> (&#123;</span><br><span class="line">  map: <span class="function"><span class="params">f</span> =&gt;</span> Just(f(value)),</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">const</span> Nothing = <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">  map: <span class="function"><span class="params">()</span> =&gt;</span> Nothing(),</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">const</span> Maybe = <span class="function"><span class="params">value</span> =&gt;</span> exists(value) ?</span><br><span class="line">  Just(value) :</span><br><span class="line">  Nothing();</span><br><span class="line"><span class="keyword">const</span> empty = undefinde;</span><br><span class="line">Maybe(empty).map(log); <span class="comment">// does not log</span></span><br></pre></td></tr></table></figure>
+
+<p>这只是一个示例，用来演示这个概念。你可以围绕 maybe 建立一整套有用的数据库，实现 flatMap 和 flat 之类的操作（例如：在编写多个返回 Maybe 的函数时避免 Just(Just(value)) 这种情况）。但是 JavaScript 已经有一种数据类型可以直接实现这些功能，因此我通常会这样做：使用数据。</p>
+<p>如果你要创建一个可能会，或可能不会产生结果的函数（尤其是可能有多个结果的情况下），那么这种情况下最好的方法可能就是返回一个数组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> log = <span class="function"><span class="params">x</span> =&gt;</span> <span class="built_in">console</span>.log(x);</span><br><span class="line"><span class="keyword">const</span> exists = <span class="function"><span class="params">x</span> =&gt;</span> x != <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> find = <span class="function">(<span class="params">p, list</span>) =&gt;</span> [list.find(p)].filter(exists);</span><br><span class="line">find(<span class="function"><span class="params">x</span> =&gt;</span> x &gt; <span class="number">3</span>, arr).map(log); <span class="comment">// does not log anything</span></span><br><span class="line">find(<span class="function"><span class="params">x</span> =&gt;</span> x &lt; <span class="number">3</span>, arr).map(log); <span class="comment">// logs 1</span></span><br></pre></td></tr></table></figure>
+
+<p>我发现在空列表上不会调用 map，这对避免 null 和 undefined 值来说非常有用，但是请记住，如果数据包含 null 和 undefined 值，它将使用这些值调用该函数，因此如果你在运行的函数可能会产生 null 或 undefined，你需要将其从返回的数组中过滤出来，如上所示。这可能会改变集合的长度。</p>
+<p>在 Haskell 中，有一个函数 Maybe（就像 map 一样）将一个函数应用于一个值上。但是该值时可选的，并封装在 Maybe 中。我们可以使用 JavaScript 的 Array 数据类型做基本上相同的事情：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// maybe = b =&gt; (a =&gt; b) =&gt; [a] =&gt; b</span></span><br><span class="line"><span class="keyword">const</span> maybe = <span class="function">(<span class="params">fallback, f = (</span>) =&gt;</span> &#123;&#125;) =&gt; <span class="function"><span class="params">arr</span> =&gt;</span></span><br><span class="line">  arr.map(f)[<span class="number">0</span>] || fallback;</span><br><span class="line"><span class="comment">// turn a value (or null/undefined) into a maybeArray</span></span><br><span class="line"><span class="keyword">const</span> toMaybeArray = <span class="function"><span class="params">value</span> =&gt;</span> [value].filter(exists);</span><br><span class="line"><span class="comment">// maybe multiply the contents of an array by 2,</span></span><br><span class="line"><span class="comment">// default to 0 if the array is empty</span></span><br><span class="line"><span class="keyword">const</span> maybeDouble = maybe(<span class="number">0</span>, x =&gt; x * <span class="number">2</span>);</span><br><span class="line"><span class="keyword">const</span> emptyArray = toMaybeArray(<span class="literal">null</span>);</span><br><span class="line"><span class="keyword">const</span> maybe2 = toMaybeArray(<span class="number">2</span>);</span><br><span class="line"><span class="comment">// logs: "maybeDouble with fallback: 0"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'maybeDouble with fallback: '</span>, maybeDouble(emptyArray));</span><br><span class="line"><span class="comment">// logs: "maybeDouble(maybe2): 4"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'maybeDouble(maybe2): '</span>, maybeDouble(maybe2));</span><br></pre></td></tr></table></figure>
+
+<p>maybe 需要一个回退值，然后是一个映射到 maybe 数组上的函数，然后是一个 maybe 数组（包含一个值，或者为空的数组），最后返回将该函数应用于数组内容的结果，或者在数据为空时返回回退值。为了方便起见，我还定义了 toMaybeArray 函数，并 curry 了 maybe 函数来让它更显眼一些，方便展示。</p>
+<p>如果你想在生产代码中执行类似的操作，我已经创建了一个经过单元测试的开源库，可以简化你的工作，这个库叫 <a href="https://github.com/ericelliott/maybearray" target="_blank" rel="noopener">Maybearray</a>。与其他 JavaScript Maybe 库相比，Maybearray 的优势在于它使用原生 JavaScript 数组来表示值，因此你不必对其进行任何特殊处理，也用不着来回转换。当你调试中遇到 Maybe 数组时，你不必问 ”这是什么奇怪的类型？“，它只是一个值的数组或一个 空数组，你已经看过一百万遍了。</p>
+<h2 id="作者介绍"><a href="#作者介绍" class="headerlink" title="作者介绍"></a>作者介绍</h2><p>Eric Elliott 是《撰写软件》和《编写 JavaScript 应用程序》这两本书的作者。他是 EricElliottJS.com 和 DevAnywhere.io 的共同创始人，并教授开发人员基本的软件开发技能。他创建并指导数字货币项目的开发团队，并为 Adobe Systems、Zumba Fitness、《华尔街日报》、ESPN、BBC 和包括 Usher、Frank Ocean、Metallica 等在内的顶级唱片艺术家贡献了自己的软件经验。他与漂亮的妻子一起过着隐士般的生活。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用户输入"><span class="toc-number">1.</span> <span class="toc-text">用户输入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#避免创建-null-和-undefined-值"><span class="toc-number">2.</span> <span class="toc-text">避免创建 null 和 undefined 值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免-null"><span class="toc-number">2.1.</span> <span class="toc-text">避免 null</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新的-JavaScript-功能"><span class="toc-number">2.2.</span> <span class="toc-text">新的 JavaScript 功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空位合并运算符"><span class="toc-number">2.3.</span> <span class="toc-text">空位合并运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Promise-实现异步-Either"><span class="toc-number">2.4.</span> <span class="toc-text">使用 Promise 实现异步 Either</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用数组实现-Maybe"><span class="toc-number">2.5.</span> <span class="toc-text">使用数组实现 Maybe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#作者介绍"><span class="toc-number">3.</span> <span class="toc-text">作者介绍</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&text=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&is_video=false&description=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？&body=Check out this article: r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&title=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&name=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2020/03/02/handling-null-and-undefined-in-javascript/&t=&lt;摘抄&gt;如何在 JavaScript 中处理 null 和 undefined？" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

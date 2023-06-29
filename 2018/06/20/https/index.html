@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="摘抄自——拉风的博客——一次安全可靠的通信 公众号文章一直被运营商各种挟持插广告，今年逐步都切换成 HTTPS，前两周再重新梳理了一些 HTTPS 细节，趁有空整理成文章做个分享。 Alice 与 Bob 的通信我们以 Alice 与 Bob 一次通信来贯穿全文，一开始他们都是用铭文的形式在网络传输通信内容。  嗅探以及篡改如果在他们的通信链路出现了一个 Hacker，由于通信内容都是明文可见，所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一次安全可靠的通信">
+<meta property="og:url" content="r0ger1tlearn.com/2018/06/20/https/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="摘抄自——拉风的博客——一次安全可靠的通信 公众号文章一直被运营商各种挟持插广告，今年逐步都切换成 HTTPS，前两周再重新梳理了一些 HTTPS 细节，趁有空整理成文章做个分享。 Alice 与 Bob 的通信我们以 Alice 与 Bob 一次通信来贯穿全文，一开始他们都是用铭文的形式在网络传输通信内容。  嗅探以及篡改如果在他们的通信链路出现了一个 Hacker，由于通信内容都是明文可见，所">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/a9034e0egy1fshjuca0z2j20ru0g6dh5.jpg">
+<meta property="og:image" content="https://tvax3.sinaimg.cn/large/a9034e0egy1fshk06gh4kj20vo0mctb6.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/a9034e0egy1fshk1i1hgtj21970og45h.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/a9034e0egy1fshk2m68klj20v40h2go1.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/a9034e0egy1fshk2w43daj20v40h20v2.jpg">
+<meta property="og:image" content="https://tvax2.sinaimg.cn/large/a9034e0egy1fshk3n3f0fj20ur0h2gor.jpg">
+<meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1fshk4gqih4j21360kawie.jpg">
+<meta property="og:image" content="https://tva4.sinaimg.cn/large/a9034e0egy1fshk5l82k9j20p80awdiz.jpg">
+<meta property="og:image" content="https://tvax2.sinaimg.cn/large/a9034e0egy1fshk5w49ekj210z0imwj5.jpg">
+<meta property="og:image" content="https://tvax1.sinaimg.cn/large/a9034e0egy1fshk6k5z5wj20vf0j9tbp.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshk76ktr7j20uq0q1gpe.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshk7nre2uj20sj0hkgo2.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshk8h7mc0j20sj0gngo4.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshk947vhdj20vf0j9acj.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshk9ort0nj20vy0lnq5g.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshkahpxyqj20sj0hctar.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshkazq3nqj20re0jkmzn.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshkbk8uenj20ve0jnjuo.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshkc2vvmvj20rh0d6tab.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshkcpt3v5j20vy0frdhp.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshkdi464fj20vy0gadi9.jpg">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/a9034e0egy1fshkdqprzvj20x80ptjux.jpg">
+<meta property="article:published_time" content="2018-06-20T04:28:25.000Z">
+<meta property="article:modified_time" content="2023-06-29T12:22:18.843Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva4.sinaimg.cn/large/a9034e0egy1fshjuca0z2j20ru0g6dh5.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>一次安全可靠的通信</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/20/javascript-loading-and-execution/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/05/18/rn-router-practice/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2018/06/20/https/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2018/06/20/https/&text=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2018/06/20/https/&is_video=false&description=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=一次安全可靠的通信&body=Check out this article: r0ger1tlearn.com/2018/06/20/https/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2018/06/20/https/&name=一次安全可靠的通信&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2018/06/20/https/&t=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Alice-与-Bob-的通信"><span class="toc-number">1.</span> <span class="toc-text">Alice 与 Bob 的通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#嗅探以及篡改"><span class="toc-number">2.</span> <span class="toc-text">嗅探以及篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加密解密"><span class="toc-number">3.</span> <span class="toc-text">加密解密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对称加密"><span class="toc-number">4.</span> <span class="toc-text">对称加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非对称加密"><span class="toc-number">5.</span> <span class="toc-text">非对称加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#认证"><span class="toc-number">6.</span> <span class="toc-text">认证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整性"><span class="toc-number">7.</span> <span class="toc-text">完整性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一次安全可靠的通信"><span class="toc-number">8.</span> <span class="toc-text">一次安全可靠的通信</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        一次安全可靠的通信
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-06-20T04:28:25.000Z" itemprop="datePublished">2018-06-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>摘抄自——<a href="http://rapheal.sinaapp.com/2015/09/16/https/" target="_blank" rel="noopener">拉风的博客——一次安全可靠的通信</a></p>
+<p>公众号文章一直被运营商各种挟持插广告，今年逐步都切换成 HTTPS，前两周再重新梳理了一些 HTTPS 细节，趁有空整理成文章做个分享。</p>
+<h2 id="Alice-与-Bob-的通信"><a href="#Alice-与-Bob-的通信" class="headerlink" title="Alice 与 Bob 的通信"></a>Alice 与 Bob 的通信</h2><p>我们以 Alice 与 Bob 一次通信来贯穿全文，一开始他们都是用铭文的形式在网络传输通信内容。</p>
+<p><img src="https://tva4.sinaimg.cn/large/a9034e0egy1fshjuca0z2j20ru0g6dh5.jpg" alt="Alice与Bob通信.jpg"></p>
+<h2 id="嗅探以及篡改"><a href="#嗅探以及篡改" class="headerlink" title="嗅探以及篡改"></a>嗅探以及篡改</h2><p>如果在他们的通信链路出现了一个 Hacker，由于通信内容都是明文可见，所以 Hacker 可以嗅探看到这些内容，也可以篡改这些内容。</p>
+<p><img src="https://tvax3.sinaimg.cn/large/a9034e0egy1fshk06gh4kj20vo0mctb6.jpg" alt="Hacker嗅探与篡改.jpg"></p>
+<p>公众号的文章之前就遇到很多被挟持篡改了内容，插入广告。</p>
+<p><img src="https://tva4.sinaimg.cn/large/a9034e0egy1fshk1i1hgtj21970og45h.jpg" alt="图文挟持样例.jpg"></p>
+<h2 id="加密解密"><a href="#加密解密" class="headerlink" title="加密解密"></a>加密解密</h2><p>既然铭文有问题，那就需要对明文进行加密处理，让中间人看不懂内容，于是乎要对原来的内容变成一段看不懂的内容，称为加密，反之则是解密。而本质其实就是一种数学运算的逆运算，类似加法减法，例如发送方可以将 abcd…xyz每个字母+1映射成 bcde…yza，使得原文字母变成看不懂的序列，而接收方只需要将每个字母-1就可以恢复成原来的序列，当然这种做法规律太容易被破解了，后边会有案例示意图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/a9034e0egy1fshk2m68klj20v40h2go1.jpg" alt="加密解密本质.jpg"></p>
+<h2 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h2><p>如果对两个二进制数 A 和 B 进行异或运算得到结果 C，那 C 和 B 再异或运算一次就会回到 A，所以异或也可以作为加密解密的运算。<br><img src="https://tva1.sinaimg.cn/large/a9034e0egy1fshk2w43daj20v40h20v2.jpg" alt="逆运算XOR.jpg"></p>
+<p>把操作数 A 作为明文，操作数 B 作为秘钥，结果 C 作为密文。可以看到加密解密运用同一个秘钥 B，把这种加密解密都用同一个秘钥的方式叫做对称加密。<br><img src="https://tvax2.sinaimg.cn/large/a9034e0egy1fshk3n3f0fj20ur0h2gor.jpg" alt="对称加密.jpg"></p>
+<p>可以看到简单的额异或加密/解密操作，需要秘钥跟明文位数相同。为了克服这个确定，需要改进一下，把明文进行分组，每组长度跟秘钥一致，分别做异或操作就可以得到密文分片，再合并到一起就得到密文了。<br><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1fshk4gqih4j21360kawie.jpg" alt="对称加密——分组.jpg"></p>
+<p>但是这种简单分组的模式也是很容易发现规律，可以从下图看到，中间采用队员图进行 DES 的 ECB 模式加密（就是上边提到的简单分组的模式）<br><img src="https://tva4.sinaimg.cn/large/a9034e0egy1fshk5l82k9j20p80awdiz.jpg" alt="对称加密不同模式对比.jpg"></p>
+<p>很显然，原图一些特征在加密后还是暴露无遗，因此需要再改进一把。一般的思路就是讲上次分组运算的结果/中间结果参与到下次分组的运算中去，是的更随机混乱，更难破解。一下图片来自维基百科：<br><img src="https://tvax2.sinaimg.cn/large/a9034e0egy1fshk5w49ekj210z0imwj5.jpg" alt="对称加密——模式.jpg"></p>
+<p>经过改良后，Alice 与 Bob 如果能提前拿到一个对称加密的秘钥，他们就可以通过加密明文来保证他们的说话内容不会被 Hacker 看到了。</p>
+<p><img src="https://tvax1.sinaimg.cn/large/a9034e0egy1fshk6k5z5wj20vf0j9tbp.jpg" alt="Alice与Bob采用对称加密方式通信.jpg"></p>
+<h2 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h2><p>刚刚还引发另一个问题，这个对称加密用到的秘钥如何互相告知呢？如果在传输真正的数据之前，先把密钥传过去，那 Hacker 还是能嗅探到，那之后就了无秘密了。于是乎出现另外一种手段：<br><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshk76ktr7j20uq0q1gpe.jpg" alt="传递密钥.jpg"> </p>
+<p>这就是非对称加密，任何人都可以通过拿到 Bob 公开的公钥对内容进行加密，然后只有 Bob 自己私有的钥匙才能解密还原出原来内容。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshk7nre2uj20sj0hkgo2.jpg" alt="非对称加密.jpg"> </p>
+<p>RSA 就是这样一个算法，具体数学证明利用了大质数乘法难以分解、费马小定理等数学理论支撑它难以破解。相对于前面的对称加密来说，其需要做乘法模除等操作，性能效率比对称加密差很多。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshk8h7mc0j20sj0gngo4.jpg" alt="RSA.jpg"> </p>
+<p>由于非对称加密的性能低，因此我们用它来先协商对称加密的秘钥即可，后续真正通信的内容还是用对称加密的手段，提高整体的性能。如果机器上安装了 OpenSSL，可以通过以下两个命令对比 RSA 和 AES 的速度比较： openssl speed rsa; openssl speed aes;</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshk947vhdj20vf0j9acj.jpg" alt="优化Alice与Bob的通信.jpg"> </p>
+<h2 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h2><p>上边虽然解决了密钥配送的问题，但是中间人还是可以欺骗双方，只要在 Alice 向 Bob 要公钥的时候，Hacker 把自己的公钥给了 Alice，而 Alice 是不知道这个事情的，以为一直都是 Bob 跟她在通信。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshk9ort0nj20vy0lnq5g.jpg" alt="中间人欺骗.jpg"> </p>
+<p>那怎么证明现在传过来的公钥就是 Bob 给的呢？在危险的网络环境下，还是没有解决这个问题。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshkahpxyqj20sj0hctar.jpg" alt="怎么证明公钥就是Bob的.jpg"> </p>
+<p>一般我们现实生活中是怎么证明 Bob 就是 Bob 呢？一般都是政府给我们每个人发一个身份证（假设身份证没法伪造），我只要看到 Bob 身份证，就证明 Bob 就是 Bob。<br>网络也可以这么做，如果有个大家都信任的组织 CA 给每个人出证明，那 Alice 只要拿到这个证明，检查一下是不是 CA 制作的 Bob 证书就可以证明 Bob 是 Bob。所以这个证书里面需要有两个重要的东西：Bob 的公钥+CA 做的数字签名。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshkazq3nqj20re0jkmzn.jpg" alt="可信组织来证明大家.jpg"> </p>
+<p>前面说到用公钥加密，只有拥有私钥的人才能解密。数字证书有点反过来：用私钥进行加密，用公钥进行解密。CA 用自己的私钥对 Bob 的信息（包含 Bob 公钥）进行加密，由于 Alice 无条件信任 CA，所以已经提前知道 CA 的公钥，当她收到 Bob 证书的时候，只要用 CA 的公钥对 Bob 证书内容进行解密，发现能否成功解开（还需要校验完整性），此时说明 Bob 就是 Bob，那之后用证书里面的 Bob 公钥来走之前的流程，就解决了中间人欺骗这个问题了。<br>这种方式也是一种防抵赖的方式，让对方把消息做成一个数字签名，只要我收到信息，用对方的公钥成功解开校验这个签名，说明这个消息必然是对方发给我的，对方不可以抵赖这个行为，因为只有他才拥有做数字签名的私钥。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshkbk8uenj20ve0jnjuo.jpg" alt="可信组织来证明大家.jpg"> </p>
+<p>CA 其实是有多级关系，顶层有个根 CA，只要他信任 B，B 信任 C，C信任D，那我们基本就可以认为 D 是可信的。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshkc2vvmvj20rh0d6tab.jpg" alt="证书信任链.jpg"> </p>
+<h2 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h2><p>上面基本上已经解决了保密性和认证，还有一个完整性没有保障。虽然 Hacker 还是看不懂内容，但是 Hacker 可以随便篡改通信内容的几个 bit 位，此时 Bob 解密看到的可能是很乱的内容，但是他也不知道这个究竟是 Alice 真是发的内容，还是被别人投投改了的内容。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshkcpt3v5j20vy0frdhp.jpg" alt="Alice你在说什么.jpg"> </p>
+<p>单项 hash 函数可以把输入变成一个定长的输出串，其特点就是无法从这个输出还原回输入内容，并且不同的输入几乎不可能产生相同的诶输出，即使你要特意去找也很难找到这样的输入（抗碰撞性），因此 Alice 只要将明文内容做一个 Hash 运算得到一个 Hash 值，并一起加密传递过去给 Bob。Hacker 即便篡改了内容，Bob 解密之后发现拿到的内容以及对应计算出来的 Hash 值与传递过来的不一致，说明这个包的完整性被破坏了。</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshkdi464fj20vy0gadi9.jpg" alt="数据完整性.jpg"> </p>
+<h2 id="一次安全可靠的通信"><a href="#一次安全可靠的通信" class="headerlink" title="一次安全可靠的通信"></a>一次安全可靠的通信</h2><p>总结一下，安全可靠的保障：<br>    1. 对称加密以及非对称加密来解决：保密性<br>    2. 数字签名：认证、不可抵赖<br>    3. 单项 Hash 算法：完整性</p>
+<p>HTTPS 的原理就是这样，真正交换应用数据之前，所协商的信息的过程称为 ssl 握手，可以用此命令：curl -c “TCP connect time: %{time_connect}, SSL connect time: %{time_appconnect}\n” -so /dev/null <a href="https://mp.weixin.qq.com" target="_blank" rel="noopener">https://mp.weixin.qq.com</a>; 来对比 tcp 连接时间跟 ssl 连接时间，可以看出，为了安全会带来额外的性能消耗。</p>
+<p>来一张完整的图：</p>
+<p><img src="https://wx3.sinaimg.cn/large/a9034e0egy1fshkdqprzvj20x80ptjux.jpg" alt="一次可靠的通信.jpg"> </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Alice-与-Bob-的通信"><span class="toc-number">1.</span> <span class="toc-text">Alice 与 Bob 的通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#嗅探以及篡改"><span class="toc-number">2.</span> <span class="toc-text">嗅探以及篡改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加密解密"><span class="toc-number">3.</span> <span class="toc-text">加密解密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对称加密"><span class="toc-number">4.</span> <span class="toc-text">对称加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非对称加密"><span class="toc-number">5.</span> <span class="toc-text">非对称加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#认证"><span class="toc-number">6.</span> <span class="toc-text">认证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整性"><span class="toc-number">7.</span> <span class="toc-text">完整性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一次安全可靠的通信"><span class="toc-number">8.</span> <span class="toc-text">一次安全可靠的通信</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2018/06/20/https/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2018/06/20/https/&text=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2018/06/20/https/&is_video=false&description=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=一次安全可靠的通信&body=Check out this article: r0ger1tlearn.com/2018/06/20/https/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2018/06/20/https/&title=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2018/06/20/https/&name=一次安全可靠的通信&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2018/06/20/https/&t=一次安全可靠的通信" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

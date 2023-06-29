@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="当使用javascript库时，如流行的jquery，最好尽可能使用这些css3本身的选择器而不是使用库的自定义方法&#x2F;选择器。这样能使我们的代码更快，因为这些选择器引擎本身就能被浏览器解析，而不是用这些库选择器。 ##1.* 1234* &amp;#123;  margin:0;  padding:0;&amp;#125; 对于初学者，在学习更多高级选择器之前，最先了解的选择器。星号选择器将匹配页面里的每一个元素">
+<meta property="og:type" content="article">
+<meta property="og:title" content="30个你必须记住的CSS选择器">
+<meta property="og:url" content="r0ger1tlearn.com/2017/09/09/css-selectors/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="当使用javascript库时，如流行的jquery，最好尽可能使用这些css3本身的选择器而不是使用库的自定义方法&#x2F;选择器。这样能使我们的代码更快，因为这些选择器引擎本身就能被浏览器解析，而不是用这些库选择器。 ##1.* 1234* &amp;#123;  margin:0;  padding:0;&amp;#125; 对于初学者，在学习更多高级选择器之前，最先了解的选择器。星号选择器将匹配页面里的每一个元素">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-09-09T08:16:24.000Z">
+<meta property="article:modified_time" content="2023-06-29T12:22:18.840Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>30个你必须记住的CSS选择器</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/16/es6-class-usage/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/08/26/javascript-callback-usage/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2017/09/09/css-selectors/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2017/09/09/css-selectors/&text=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2017/09/09/css-selectors/&is_video=false&description=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=30个你必须记住的CSS选择器&body=Check out this article: r0ger1tlearn.com/2017/09/09/css-selectors/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2017/09/09/css-selectors/&name=30个你必须记住的CSS选择器&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2017/09/09/css-selectors/&t=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-X"><span class="toc-number">1.</span> <span class="toc-text">2.#X</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-X"><span class="toc-number">2.</span> <span class="toc-text">3. .X</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-X-Y"><span class="toc-number">3.</span> <span class="toc-text">4.X Y</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-X"><span class="toc-number">4.</span> <span class="toc-text">5.X</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-X-visited-and-X-link"><span class="toc-number">5.</span> <span class="toc-text">6.X:visited and X:link</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-X-Y"><span class="toc-number">6.</span> <span class="toc-text">7.X + Y</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-X-gt-Y"><span class="toc-number">7.</span> <span class="toc-text">8.X &gt; Y</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-X-Y"><span class="toc-number">8.</span> <span class="toc-text">9.X ~ Y</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-X-title"><span class="toc-number">9.</span> <span class="toc-text">10.X[title]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-X-href-”foo”"><span class="toc-number">10.</span> <span class="toc-text">11.X[href&#x3D;”foo”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-X-href-”nettuts”"><span class="toc-number">11.</span> <span class="toc-text">12.X[href*&#x3D;”nettuts”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-X-href-”http”"><span class="toc-number">12.</span> <span class="toc-text">13.X[href^&#x3D;”http”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-X-href-”-jpg”"><span class="toc-number">13.</span> <span class="toc-text">14.X[href$&#x3D;”.jpg”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-X-data-”fooo”"><span class="toc-number">14.</span> <span class="toc-text">15.X[data-*&#x3D;”fooo”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-X-foo-”bar”"><span class="toc-number">15.</span> <span class="toc-text">16.X[foo~&#x3D;”bar”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-X-checked"><span class="toc-number">16.</span> <span class="toc-text">17.X:checked</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-X-after"><span class="toc-number">17.</span> <span class="toc-text">18.X:after</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-X-hover"><span class="toc-number">18.</span> <span class="toc-text">19.X:hover</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-X-not-selector"><span class="toc-number">19.</span> <span class="toc-text">20.X:not(selector)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-X-pseudoElement"><span class="toc-number">20.</span> <span class="toc-text">21.X::pseudoElement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-X-nth-child-n"><span class="toc-number">21.</span> <span class="toc-text">22.X:nth-child(n)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-X-nth-last-child-n"><span class="toc-number">22.</span> <span class="toc-text">23.X:nth-last-child(n)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#24-X-nth-of-type-n"><span class="toc-number">23.</span> <span class="toc-text">24.X:nth-of-type(n)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25-X-nth-last-of-type-n"><span class="toc-number">24.</span> <span class="toc-text">25.X:nth-last-of-type(n)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#26-X-first-child"><span class="toc-number">25.</span> <span class="toc-text">26.X:first-child</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#27-X-last-child"><span class="toc-number">26.</span> <span class="toc-text">27.X:last-child</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#28-X-only-child"><span class="toc-number">27.</span> <span class="toc-text">28.X:only-child</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#29-X-only-of-type"><span class="toc-number">28.</span> <span class="toc-text">29.X:only-of-type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30-X-first-of-type"><span class="toc-number">29.</span> <span class="toc-text">30.X:first-of-type</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法1"><span class="toc-number">29.1.</span> <span class="toc-text">解决办法1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法2"><span class="toc-number">29.2.</span> <span class="toc-text">解决办法2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法3"><span class="toc-number">29.3.</span> <span class="toc-text">解决办法3</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        30个你必须记住的CSS选择器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-09-09T08:16:24.000Z" itemprop="datePublished">2017-09-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>当使用javascript库时，如流行的jquery，最好尽可能使用这些css3本身的选择器而不是使用库的自定义方法/选择器。这样能使我们的代码更快，因为这些选择器引擎本身就能被浏览器解析，而不是用这些库选择器。</p>
+<p>##1.*</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">  margin:0;</span><br><span class="line">  padding:0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于初学者，在学习更多高级选择器之前，最先了解的选择器。<br>星号选择器将匹配页面里的每一个元素。很多开发者使用这个技巧将外边距好内边距重置为零。建议不要在生产代码中使用它，因为它给浏览器带来大量不必要的负担。<br>*也能作为子选字符使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#container * &#123;</span><br><span class="line">  border: 1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这将匹配#container div的每一个后代元素。再次强调，尽量不要使用这种技术。</p>
+<p>兼容性<br>IE6+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="2-X"><a href="#2-X" class="headerlink" title="2.#X"></a>2.#X</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#container &#123;</span><br><span class="line">  width:960px;</span><br><span class="line">  margin:auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>井号前缀允许我们选择id，这是常见的用法，不过应该慎重使用id选择器。<br>id选择符是唯一的，不允许重复使用。如果可能的话，先尝试使用一个标签名称，一个新的html5元素，甚至是一个伪类。</p>
+<p>兼容性<br>IE6+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="3-X"><a href="#3-X" class="headerlink" title="3. .X"></a>3. .X</h2><p>.error {<br> color: red;<br>}<br>现在介绍的是类选择器。id和类的不同之处在于后者可以多次使用。当你想给一组元素应用样式的时候就可以使用类选择器。另外，当你仅想给特殊元素应用的时候才使用id。</p>
+<p>兼容性<br>IE6+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="4-X-Y"><a href="#4-X-Y" class="headerlink" title="4.X Y"></a>4.X Y</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">li a &#123;</span><br><span class="line">  text-decoration: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常用的后代选择符。当你需要给你的选择符增加特殊性的时候你可以使用。</p>
+<p>兼容性<br>IE6+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="5-X"><a href="#5-X" class="headerlink" title="5.X"></a>5.X</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a &#123; color: red;&#125;</span><br><span class="line">ul &#123; margin-left: 0;&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想匹配页面上的所有元素，根据他们的类型，而不是id或类名。显而易见，使用类型选择符。如果你需要选择所有的无序列表，请使用ul {}。</p>
+<p>兼容性<br>IE6+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="6-X-visited-and-X-link"><a href="#6-X-visited-and-X-link" class="headerlink" title="6.X:visited and X:link"></a>6.X:visited and X:link</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a:link &#123; color:red;&#125;</span><br><span class="line">a:visited &#123; color:purple;&#125;</span><br></pre></td></tr></table></figure>
+<p>我们使用 :link 伪类选择符选择所有已被点击过的锚标签<br>此外，我们也有 :visited 伪类选择符，正如你期望的，允许我们仅给页面上被点击过的或被访问过的锚标签应用样式。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="7-X-Y"><a href="#7-X-Y" class="headerlink" title="7.X + Y"></a>7.X + Y</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul + p &#123;</span><br><span class="line">  color:red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这被称作相邻选择符。它将只选择仅紧贴在X元素之后Y元素。上面的例子，仅每一个ul之后的每一个段落元素的文本为红色。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="8-X-gt-Y"><a href="#8-X-gt-Y" class="headerlink" title="8.X &gt; Y"></a>8.X &gt; Y</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">div#container &gt; ul &#123;</span><br><span class="line">  border: 1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>X Y和 X &gt; Y之间的不同点是后者只选择直接子代。例如，考虑如下的标记。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;container&quot;&gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li&gt;List Item</span><br><span class="line">      &lt;ul&gt;</span><br><span class="line">        &lt;li&gt;Child&lt;&#x2F;li&gt;</span><br><span class="line">      &lt;&#x2F;ul&gt;</span><br><span class="line">    &lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li&gt;List Item&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li&gt;List Item&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li&gt;List Item&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;&#x2F;ul&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>选择符#container &gt; ul将只选择id为container的div的直接子代ul。它不匹配更深层的li的子代的ul。因此，使用子代选择符有性能上的优势。事实上，这同样适用于基于css选择器的javascript引擎。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="9-X-Y"><a href="#9-X-Y" class="headerlink" title="9.X ~ Y"></a>9.X ~ Y</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul ~ p &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是兄弟选择符和X + Y一样，然而，它没有约束。与相邻选择符（ul + li）仅选择前一个选择符后面的第一个元素比起来，兄弟选择符更宽泛。他会选择，我们上面的例子中选择跟在ul后面的任何p元素。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="10-X-title"><a href="#10-X-title" class="headerlink" title="10.X[title]"></a>10.X[title]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a[title] &#123;</span><br><span class="line">  color: green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>被称为属性选择器，在我们上面的例子里，这只会选择有title属性的锚标签。没有此属性的锚标签将不受影响。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="11-X-href-”foo”"><a href="#11-X-href-”foo”" class="headerlink" title="11.X[href=”foo”]"></a>11.X[href=”foo”]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a[href&#x3D;&quot;http:&#x2F;&#x2F;net.tutsplus.com&quot;] &#123;</span><br><span class="line">  color: #1f6053; &#x2F;* nettuts green *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码段落将所有href属性为<a href="http://net.ttsplus.com的锚标签添加样式；他们将会显示为我们的品牌绿色。所有其它的锚标签将不受影响。" target="_blank" rel="noopener">http://net.ttsplus.com的锚标签添加样式；他们将会显示为我们的品牌绿色。所有其它的锚标签将不受影响。</a><br>注意我们将href值用引号包裹。记住，当使用javascript的css选择符引擎时也这么做。如果可能的话，尽可能使用css3选择符代替非官方的方法。<br>这工作的很好，但有点不够灵活。如果连接确实直接连接到Nettus+还好，但是，也许路径是nettus的相对路径呢？在这种情况下，我们可以使用一点正则表达式语法。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="12-X-href-”nettuts”"><a href="#12-X-href-”nettuts”" class="headerlink" title="12.X[href*=”nettuts”]"></a>12.X[href*=”nettuts”]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a[href*&#x3D;&quot;tuts&quot;] &#123;</span><br><span class="line">  color: #1f6053; &#x2F;* nettuts green *&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就是我们需要的代码，*号指定了包含该属性的值必须包含定义的值。就是说，这句代码包含了href值为nettuts.com,net.tutsplus.com或者tutsplus.com。<br>记住这个描述过于宽泛，如果是某个锚点标签连接到某个连接中带有tuts非Envato的网站（tuts属于Envato旗下网站）呢？因此我们需要更多特性来限制，分别使用^和$来限定字符串的开始和结束。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="13-X-href-”http”"><a href="#13-X-href-”http”" class="headerlink" title="13.X[href^=”http”]"></a>13.X[href^=”http”]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a[href^&#x3D;&quot;http&quot;] &#123;</span><br><span class="line">  background: url(path&#x2F;to&#x2F;external&#x2F;icon.png) no-repeat;</span><br><span class="line">  padding-left: 10px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用^(carat)符，^ 在正则表达式中表示字符串的开始。如果我们想指向所有以”http“开头的”href”属性的锚点的话，我们就可以使用类似于上面的那段代码了。<br>注意：我们并不需要搜索”http://“,完全没有必要，因为我们还要包含以”https://“开头的链接呢。<br>如果我们想为所有连接到图片的链接定义样式呢？这种情况下，我们就得搜索字符串的结束了……</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="14-X-href-”-jpg”"><a href="#14-X-href-”-jpg”" class="headerlink" title="14.X[href$=”.jpg”]"></a>14.X[href$=”.jpg”]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a[href$&#x3D;&quot;.jpg&quot;] &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还是使用正则表达式符号，$(dolor),来作为字符串的结束标记。这种情况下，我们就会搜索所有url以.jpg为结尾的锚点了，记住<strong>这种情况下gif和png格式的图片不会被选择</strong>。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="15-X-data-”fooo”"><a href="#15-X-data-”fooo”" class="headerlink" title="15.X[data-*=”fooo”]"></a>15.X[data-*=”fooo”]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a[data-filetype&#x3D;&quot;image&quot;] &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回顾最近一条，我们如何能包含各种图片类型：.png,.jpeg,.jpg,.gif?很容易想到，我们可以通过多个选择器来实现，像这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a[href$&#x3D;&quot;.png&quot;],</span><br><span class="line">a[href$&#x3D;&quot;.gif&quot;],</span><br><span class="line">a[href$&#x3D;&quot;jpeg&quot;],</span><br><span class="line">a[href$&#x3D;&quot;jpg&quot;] &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过这样很蛋疼，效率极低。另一个解决办法是使用自定义属性。如果我们加了一种自己的data-filetype属性给每一个链接到图片的锚点的话呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;path&#x2F;to&#x2F;image&#x2F;.jpg&quot; data-filetype&#x3D;&quot;image&quot;&gt; Image Link &lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+<p>这样关联后，我们就能使用标准的属性选择器来指定这些链接了。如下面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a[data-tiletype&#x3D;&quot;image&quot;] &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="16-X-foo-”bar”"><a href="#16-X-foo-”bar”" class="headerlink" title="16.X[foo~=”bar”]"></a>16.X[foo~=”bar”]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a[data-info~&#x3D;&quot;external&quot;] &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">a[data-info~&#x3D;&quot;image&quot;] &#123;</span><br><span class="line">  border:1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这儿有个鲜为人知的特殊技巧，绝对让你印象深刻，~(tilda)符，它可以帮助我们指向那些属性为以空格隔开的多个值的元素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;path&#x2F;to&#x2F;image.jpg&quot; data-info&#x3D;&quot;external image&quot;&gt;</span><br><span class="line">  Click me,Fool</span><br><span class="line">&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+<p>上面代码中我们创建了data-info属性，这个属性可以定义以空格分隔的多个值。这样，这个链接本身就是个icon，并且指向的也是一个图片链接。<br>有了这样适当的标记，通过使用~属性选择器的技巧，我们就可以指向任何具有着两种属性的任何一种了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*Target data-info attr that contains the value &quot;external&quot; *&#x2F;</span><br><span class="line">a[data-info~&#x3D;&quot;external&quot;] &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* And which contains the value &quot;image&quot; *&#x2F;</span><br><span class="line">a[data-info~&#x3D;&quot;image&quot;] &#123;</span><br><span class="line">  border: 1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>it’s awesome！</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="17-X-checked"><a href="#17-X-checked" class="headerlink" title="17.X:checked"></a>17.X:checked</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">input[type&#x3D;radio]:checked &#123;</span><br><span class="line">  border: 1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种伪类只会匹配已经被选中的单选元素。就是介么简单0，0</p>
+<p>兼容性：<br>IE9+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="18-X-after"><a href="#18-X-after" class="headerlink" title="18.X:after"></a>18.X:after</h2><p>bofore和after伪元素也很蛋疼。貌似人们么天都能找到或者发明一些新办法来有效地使用它们，他们很容易控制选择器周围的内容。<br>很多第一次使用是因为他们需要对chear-fix进行改造。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.clearfix:after &#123;</span><br><span class="line">  content: &quot;&quot;;</span><br><span class="line">  display: block;</span><br><span class="line">  clear: both;</span><br><span class="line">  visibility: hidden;</span><br><span class="line">  font-size: 0;</span><br><span class="line">  height: 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.clearfix &#123;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  height: 1%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个改进使用了<code>：after</code>伪类元素来在元素后面增加一个空间，然后清除它。这个牛X的技巧我们应该收藏到工具包，特别是当<code>overflow: hidden</code>方法无能为力的时候。</p>
+<p>通过CSS3选择器的标准说明书，我们应该有技巧的使用这些伪类语法–双冒号::。不过为了兼容，浏览器会接受一个双引号。</p>
+<p>兼容性<br>IE8+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="19-X-hover"><a href="#19-X-hover" class="headerlink" title="19.X:hover"></a>19.X:hover</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">div:hover &#123;</span><br><span class="line">  background:#e3e3e3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>典型的官方形式的用户触发伪类，想在用户在某个元素上面悬停时定义个别的样式？这个属性就是干这个的。<br>较老版本的IE，只能在锚点标签后使用这个hover。<br>这个选择器用的最多的情况，估计可能就是在锚点的悬停时加个border-bottom了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a:hover &#123;</span><br><span class="line">  border-bottom: 1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>兼容性<br>IE6+(in IE6, :hover must be applied to an anchor element)<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="20-X-not-selector"><a href="#20-X-not-selector" class="headerlink" title="20.X:not(selector)"></a>20.X:not(selector)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">div:not(#container) &#123;</span><br><span class="line">  color: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>not 伪类非常有用。例如我要选择所有的div，除了id为container的。上面的代码片段就能完美的实现。<br>如果我想选择除了p以外的所有元素，我可以这么做</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*:not(p) &#123;</span><br><span class="line">  color: green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>兼容性<br>IE9+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="21-X-pseudoElement"><a href="#21-X-pseudoElement" class="headerlink" title="21.X::pseudoElement"></a>21.X::pseudoElement</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p::first-line &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">  font-size: 1.2em;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以使用伪元素（以::表示）来定义元素的样式。例如第一行，第一个字符，记住，这种方法只能应用于同级元素才有效。<br>伪元素由两个冒号组成： <code>::</code><br><strong>指定p的第一个字符的样式：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p::first-letter &#123;</span><br><span class="line">  float: left;</span><br><span class="line">  font-size: 2em;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">  font-family: cursive;</span><br><span class="line">  padding-right: 2px; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码会找到所有段落，然后从中定义这些段落的第一个字符。<br>这常常使用在仿报纸的文章首字母样式。</p>
+<p><strong>指定p的首行样式：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p::first-line &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">  font-size: 2em;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样，这个<code>::first-line</code>会像我们期望的那样，只定义段落的第一行的样式。</p>
+<p>兼容性<br>IE6+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="22-X-nth-child-n"><a href="#22-X-nth-child-n" class="headerlink" title="22.X:nth-child(n)"></a>22.X:nth-child(n)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">li:nth-child(3) &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>:nth-chlid</code>伪类解决了无法从元素堆中选择元素的尴尬局面。<br>注意：nth-child接收整数和变量，不过不是从0开始的，如果你想选定第二个li，使用 li:nth-child(2).<br>我们甚至使用这个办法来选择任意的子元素。例如，我们可以用<code>li:nth-child(4n)</code>来完成4为倍数的所有元素的选择。</p>
+<p>兼容性<br>IE9+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="23-X-nth-last-child-n"><a href="#23-X-nth-last-child-n" class="headerlink" title="23.X:nth-last-child(n)"></a>23.X:nth-last-child(n)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">li:nth-last-child(2) &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我有非常多的li在ul里面，而我只想要最后3个li怎么办？可以使用nth-last-child伪类，即li:nth-last-child(3)</p>
+<p>兼容性<br>IE9+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="24-X-nth-of-type-n"><a href="#24-X-nth-of-type-n" class="headerlink" title="24.X:nth-of-type(n)"></a>24.X:nth-of-type(n)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul:first-child &#123;</span><br><span class="line">  border: 1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>应该会有很多时候想要元素类型来选择元素而不是通过后代选择。<br>想象一下标记5个无需列表（ul）。如果你想定义第三个ul，并且没有一个唯一的id来找到它，你就可以使用nth-of-type(3)伪类了，在上面代码中，只要第三个ul才会有黑色的边框。</p>
+<p>兼容性<br>IE9+<br>Firefox 3.5+<br>Chrome<br>Safari</p>
+<h2 id="25-X-nth-last-of-type-n"><a href="#25-X-nth-last-of-type-n" class="headerlink" title="25.X:nth-last-of-type(n)"></a>25.X:nth-last-of-type(n)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul:nth-last-of-type(3) &#123;</span><br><span class="line">  border: 1px solid black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们也可以通过使用nth-last-of-type()来从结束开始回溯这个选择器，来找到我们想要的元素。</p>
+<p>兼容性<br>IE9+<br>Firefox 3.5+<br>Chrome<br>Safari</p>
+<h2 id="26-X-first-child"><a href="#26-X-first-child" class="headerlink" title="26.X:first-child"></a>26.X:first-child</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul li:first-child &#123;</span><br><span class="line">  border-top: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个结构的伪类让我们可以选择某个元素的第一个后代。通常可以通过使用这个办法来删除第一个或者最后一个元素的边框。<br>例如有一系列的rows，每一个都有border-top和border-bottom。这种情况下，第一行和最后一行会看起来非常怪，所以很多设计师会使用first类和last类来弥补这个缺陷。</p>
+<p>兼容性<br>IE7+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="27-X-last-child"><a href="#27-X-last-child" class="headerlink" title="27.X:last-child"></a>27.X:last-child</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul li&#123;</span><br><span class="line">  color: green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与first-child不同，last-child会选择父节点的最后一个子节点</p>
+<p>例如：<br>我们建立一个例子来示范这些类的可能的用法。我们会建立一种风格来显示。</p>
+<p>html</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;List Item&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;li&gt;List Item&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;li&gt;List Item&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;li&gt;List Item&lt;&#x2F;li&gt;</span><br><span class="line">&lt;&#x2F;ul&gt;</span><br></pre></td></tr></table></figure>
+<p>css</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ul &#123;</span><br><span class="line">  width:200px;</span><br><span class="line">  background:#292929;</span><br><span class="line">  color:white;</span><br><span class="line">  list-style:none;</span><br><span class="line">  padding-left:0;</span><br><span class="line">&#125;</span><br><span class="line">li &#123;</span><br><span class="line">  padding:10px;</span><br><span class="line">  border-bottom: 1px solid black;</span><br><span class="line">  border-top: 1px solid #3c3c3c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个样式会设置一个背景，删除浏览器默认的ul的padding值，并定义边框给每一个li来提供一点深度。唯一的问题就是最上面的边框和最下面的边框看起来有点怪，使用<code>first-child</code>和<code>last-child</code>来解决这个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">li:first-child &#123;</span><br><span class="line">  border-top: none;</span><br><span class="line">&#125;</span><br><span class="line">li:last-child &#123;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果自行观察</p>
+<p>兼容性<br>IE9+(IE8支持<code>first-child</code>而不支持<code>last-child</code>)<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="28-X-only-child"><a href="#28-X-only-child" class="headerlink" title="28.X:only-child"></a>28.X:only-child</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">div p:only-child &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它可以帮助我们选择是父节点的独生子（没有别的后代）的元素。例如，使用上面代码，只有是div的唯一后代的p段落才会定义其颜色为red。<br>让我们假定下面的标记：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;&lt;p&gt;My paragraph here.&lt;&#x2F;p&gt;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;p&gt;Two paragraphs total.&lt;&#x2F;p&gt;</span><br><span class="line">  &lt;p&gt;Two paragraphs total.&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>兼容性<br>IE 9+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="29-X-only-of-type"><a href="#29-X-only-of-type" class="headerlink" title="29.X:only-of-type"></a>29.X:only-of-type</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">li:only-of-type &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种结构的伪类有几种非常聪明的用法。它可以选定在其父节点内没有兄弟节点的元素。例如，我们可以选择只有一个li为其后代的ul。<br>首先，取决于你想怎样完成这一目标。你可以使用<code>ul li</code>,不过，这会选择所有li元素。唯一的办法就是使用<code>only-of-type</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul&gt;li:only-of-type &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>兼容性<br>IE 9+<br>Firefox<br>Chrome<br>Safari<br>Opera</p>
+<h2 id="30-X-first-of-type"><a href="#30-X-first-of-type" class="headerlink" title="30.X:first-of-type"></a>30.X:first-of-type</h2><p>first-of-type伪类可以让你选择该类型的第一个兄弟节点。</p>
+<p>for example：</p>
+<p>为了更好的了解，我们来测试下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;p&gt;My paragraph here.&lt;&#x2F;p&gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li&gt;List Item 1.&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li&gt;List Item 2.&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;&#x2F;ul&gt;</span><br><span class="line">  &lt;ul&gt;		</span><br><span class="line">    &lt;li&gt;List Item 3.&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li&gt;List Item 4.&lt;&#x2F;li&gt;</span><br><span class="line">  &lt;&#x2F;ul&gt;&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>试试看如何能只选择”List Item 2“</p>
+<h3 id="解决办法1"><a href="#解决办法1" class="headerlink" title="解决办法1"></a>解决办法1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul:first-of-type &gt; li:nth-child(2) &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方案是先找到第一个无序列表ul，然后利用<code>nth-child(2)</code>得到第二个<code>li</code>.</p>
+<h3 id="解决办法2"><a href="#解决办法2" class="headerlink" title="解决办法2"></a>解决办法2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p + ul li:last-child &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个方案中，我们找到p的临近节点ul，然后选取ul的最后一个li后代</p>
+<h3 id="解决办法3"><a href="#解决办法3" class="headerlink" title="解决办法3"></a>解决办法3</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ul:first-of-type li:nth-last-child(1) &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方案先取到第一个ul，然后利用<code>nth-last-child</code>取到第二个li元素（因为它在最后，如果有两个以上元素取第二个就不能用这种方法）</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-X"><span class="toc-number">1.</span> <span class="toc-text">2.#X</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-X"><span class="toc-number">2.</span> <span class="toc-text">3. .X</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-X-Y"><span class="toc-number">3.</span> <span class="toc-text">4.X Y</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-X"><span class="toc-number">4.</span> <span class="toc-text">5.X</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-X-visited-and-X-link"><span class="toc-number">5.</span> <span class="toc-text">6.X:visited and X:link</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-X-Y"><span class="toc-number">6.</span> <span class="toc-text">7.X + Y</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-X-gt-Y"><span class="toc-number">7.</span> <span class="toc-text">8.X &gt; Y</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-X-Y"><span class="toc-number">8.</span> <span class="toc-text">9.X ~ Y</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-X-title"><span class="toc-number">9.</span> <span class="toc-text">10.X[title]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-X-href-”foo”"><span class="toc-number">10.</span> <span class="toc-text">11.X[href&#x3D;”foo”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-X-href-”nettuts”"><span class="toc-number">11.</span> <span class="toc-text">12.X[href*&#x3D;”nettuts”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-X-href-”http”"><span class="toc-number">12.</span> <span class="toc-text">13.X[href^&#x3D;”http”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-X-href-”-jpg”"><span class="toc-number">13.</span> <span class="toc-text">14.X[href$&#x3D;”.jpg”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-X-data-”fooo”"><span class="toc-number">14.</span> <span class="toc-text">15.X[data-*&#x3D;”fooo”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-X-foo-”bar”"><span class="toc-number">15.</span> <span class="toc-text">16.X[foo~&#x3D;”bar”]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-X-checked"><span class="toc-number">16.</span> <span class="toc-text">17.X:checked</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-X-after"><span class="toc-number">17.</span> <span class="toc-text">18.X:after</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-X-hover"><span class="toc-number">18.</span> <span class="toc-text">19.X:hover</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-X-not-selector"><span class="toc-number">19.</span> <span class="toc-text">20.X:not(selector)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-X-pseudoElement"><span class="toc-number">20.</span> <span class="toc-text">21.X::pseudoElement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-X-nth-child-n"><span class="toc-number">21.</span> <span class="toc-text">22.X:nth-child(n)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-X-nth-last-child-n"><span class="toc-number">22.</span> <span class="toc-text">23.X:nth-last-child(n)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#24-X-nth-of-type-n"><span class="toc-number">23.</span> <span class="toc-text">24.X:nth-of-type(n)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25-X-nth-last-of-type-n"><span class="toc-number">24.</span> <span class="toc-text">25.X:nth-last-of-type(n)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#26-X-first-child"><span class="toc-number">25.</span> <span class="toc-text">26.X:first-child</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#27-X-last-child"><span class="toc-number">26.</span> <span class="toc-text">27.X:last-child</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#28-X-only-child"><span class="toc-number">27.</span> <span class="toc-text">28.X:only-child</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#29-X-only-of-type"><span class="toc-number">28.</span> <span class="toc-text">29.X:only-of-type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30-X-first-of-type"><span class="toc-number">29.</span> <span class="toc-text">30.X:first-of-type</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法1"><span class="toc-number">29.1.</span> <span class="toc-text">解决办法1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法2"><span class="toc-number">29.2.</span> <span class="toc-text">解决办法2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决办法3"><span class="toc-number">29.3.</span> <span class="toc-text">解决办法3</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2017/09/09/css-selectors/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2017/09/09/css-selectors/&text=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2017/09/09/css-selectors/&is_video=false&description=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=30个你必须记住的CSS选择器&body=Check out this article: r0ger1tlearn.com/2017/09/09/css-selectors/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2017/09/09/css-selectors/&title=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2017/09/09/css-selectors/&name=30个你必须记住的CSS选择器&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2017/09/09/css-selectors/&t=30个你必须记住的CSS选择器" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

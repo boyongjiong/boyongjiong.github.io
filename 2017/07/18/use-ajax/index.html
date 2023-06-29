@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="工作原理首先需要向服务器发送一个请求，然后调用一个服务，接着返回数据。不过，与通过响应提交表单，载入新页面或使用iframe和远程脚本不同，Ajax实在同一个Web页面文档中处理这些活动的。 为了管理服务器端和客户端之间的异步通信，需要一特殊的对象，或者是微软早期提供的ActiveXObject，或者是更通用和标准的XMLHttpRequest。异步通信的意思是当发送请求时，但是客户端并不需要停止">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Ajax($.ajax)">
+<meta property="og:url" content="r0ger1tlearn.com/2017/07/18/use-ajax/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="工作原理首先需要向服务器发送一个请求，然后调用一个服务，接着返回数据。不过，与通过响应提交表单，载入新页面或使用iframe和远程脚本不同，Ajax实在同一个Web页面文档中处理这些活动的。 为了管理服务器端和客户端之间的异步通信，需要一特殊的对象，或者是微软早期提供的ActiveXObject，或者是更通用和标准的XMLHttpRequest。异步通信的意思是当发送请求时，但是客户端并不需要停止">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-07-18T01:52:22.000Z">
+<meta property="article:modified_time" content="2023-06-29T12:22:18.846Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Ajax($.ajax)</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/08/16/operator-precedence/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/07/16/vim-commands/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2017/07/18/use-ajax/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2017/07/18/use-ajax/&text=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2017/07/18/use-ajax/&is_video=false&description=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Ajax($.ajax)&body=Check out this article: r0ger1tlearn.com/2017/07/18/use-ajax/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2017/07/18/use-ajax/&name=使用 Ajax($.ajax)&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2017/07/18/use-ajax/&t=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-number">1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-Ajax-World"><span class="toc-number">2.</span> <span class="toc-text">Hello Ajax World</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#XMLHttpRequest对象及请求的准备与发送"><span class="toc-number">2.1.</span> <span class="toc-text">XMLHttpRequest对象及请求的准备与发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XMLHttpRequeat对象的方法"><span class="toc-number">2.2.</span> <span class="toc-text">XMLHttpRequeat对象的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XMLHttpRequeat对象的属性"><span class="toc-number">2.3.</span> <span class="toc-text">XMLHttpRequeat对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP请求中常用的方法："><span class="toc-number">2.4.</span> <span class="toc-text">HTTP请求中常用的方法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax数据：XML或JSON"><span class="toc-number">3.</span> <span class="toc-text">Ajax数据：XML或JSON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据的MIME类型"><span class="toc-number">3.1.</span> <span class="toc-text">数据的MIME类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在服务器端生成XML数据"><span class="toc-number">3.1.1.</span> <span class="toc-text">在服务器端生成XML数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在客户端处理XML数据"><span class="toc-number">3.1.2.</span> <span class="toc-text">在客户端处理XML数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON"><span class="toc-number">3.2.</span> <span class="toc-text">JSON</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jQuery-ajax-url-settings"><span class="toc-number">4.</span> <span class="toc-text">jQuery.ajax(url,[settings])</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jQuery-ajax-settings"><span class="toc-number">4.1.</span> <span class="toc-text">jQuery.ajax([settings])</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Ajax($.ajax)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-07-18T01:52:22.000Z" itemprop="datePublished">2017-07-18</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>首先需要向服务器发送一个请求，然后调用一个服务，接着返回数据。不过，与通过响应提交表单，载入新页面或使用iframe和远程脚本不同，Ajax实在同一个Web页面文档中处理这些活动的。</p>
+<p>为了管理服务器端和客户端之间的异步通信，需要一特殊的对象，或者是微软早期提供的ActiveXObject，或者是更通用和标准的XMLHttpRequest。异步通信的意思是当发送请求时，但是客户端并不需要停止、保持，并且一直等待服务器端的处理完成。在此同时，客户端将指定一个在请求状态发生改变时调用的函数。</p>
+<p>在这个函数中，将检查请求的状态，如果请求已经处理完成，并且没有发现服务器端出现错误，那么将对从该服务器返回的数据进行处理并通常以某种形式输出到页面上。</p>
+<p>对于Web页面的访问者而言，这些活动看起来就像在页面中发生的一样，而不是通过客户端/服务器端交互。在访问服务器时，除非用户在检测服务器请求，或者应用程序提供了一些操作提示，否则用户是无法看到可视化指示器的。</p>
+<hr>
+<h2 id="Hello-Ajax-World"><a href="#Hello-Ajax-World" class="headerlink" title="Hello Ajax World"></a>Hello Ajax World</h2><p>最常见的Ajax应用是基于用户触发的事件返回一些数据</p>
+<p>第一个例子在启动完服务器后，浏览器输入<a href="http://localhost/httpDemo/helloAjax/访问" target="_blank" rel="noopener">http://localhost/httpDemo/helloAjax/访问</a></p>
+<h3 id="XMLHttpRequest对象及请求的准备与发送"><a href="#XMLHttpRequest对象及请求的准备与发送" class="headerlink" title="XMLHttpRequest对象及请求的准备与发送"></a>XMLHttpRequest对象及请求的准备与发送</h3><p>在上面的项目中的getXMLHttp中，定义了一个初始值为null的局部变量xmlhttp，代码先检查是否作为window对象的属性支持XMLHttpRequest对象。如果支持，则创建一个新的XMLHttpRequest对象并将它设置为局部变量。如果通过老版本的IE访问该页面，则创建一个ActiveX对象并将其赋给相同的局部变量，最后改函数的返回值就是这个局部变量。</p>
+<h3 id="XMLHttpRequeat对象的方法"><a href="#XMLHttpRequeat对象的方法" class="headerlink" title="XMLHttpRequeat对象的方法"></a>XMLHttpRequeat对象的方法</h3><p>XMLHttpRequest是一个很简单的对象，提供了一些方法和属性</p>
+<ul>
+<li>open<br>open方法的语法是open(method, url[,async,username,password]).它用来打开到指定URL的连接（通过指定的方法）。可选的参数有3个：async参数用来将请求设置成异步模式（true，默认值）或同步（false）；username和password用来指定服务器所需的用户名和密码。</li>
+<li>setRequestHeader<br>该方法为请求的标头添加标签/值对</li>
+<li>send<br>用来发送该请求，同事附上相关联的数据</li>
+<li>getAllResponseHeaders<br>它将以字符串的形式返回所有HTTP响应的标头，其中的信息包含激活超时值<br>content-type、服务相关信息和日期信息</li>
+<li>getResponseHeader<br>它将返回指定HTTP响应的标头</li>
+<li>abort<br>abort方法的语法为abort(),用来终止当前请求</li>
+</ul>
+<h3 id="XMLHttpRequeat对象的属性"><a href="#XMLHttpRequeat对象的属性" class="headerlink" title="XMLHttpRequeat对象的属性"></a>XMLHttpRequeat对象的属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>onreadystatechange</td>
+<td>当请求的ready状态，用来保存所调用函数的句柄</td>
+</tr>
+<tr>
+<td>readyState</td>
+<td>5个可选值：0表示请求未初始化;1表示开放请求;2表示请求已发送;3表示正在接收响应;4表示响应完成载入</td>
+</tr>
+<tr>
+<td>responesText</td>
+<td>文本格式的响应</td>
+</tr>
+<tr>
+<td>responseXML</td>
+<td>XML格式的响应，然后可以将其视为有效XML处理</td>
+</tr>
+<tr>
+<td>status</td>
+<td>返回请求的状态，如404/500，或者希望的200（表示一切正常）</td>
+</tr>
+<tr>
+<td>statusText</td>
+<td>以文字表示请求状态</td>
+</tr>
+</tbody></table>
+<h3 id="HTTP请求中常用的方法："><a href="#HTTP请求中常用的方法：" class="headerlink" title="HTTP请求中常用的方法："></a>HTTP请求中常用的方法：</h3><ul>
+<li>GET<br>从服务器请求数据</li>
+<li>POST<br>向服务器发送数据</li>
+<li>DELETE<br>删除指定资源的数据</li>
+<li>PUT<br>保存指定资源的数据</li>
+<li>HEAD<br>与GET类似，但是不返回响应正文(用于获取信息)</li>
+</ul>
+<h2 id="Ajax数据：XML或JSON"><a href="#Ajax数据：XML或JSON" class="headerlink" title="Ajax数据：XML或JSON"></a>Ajax数据：XML或JSON</h2><h3 id="数据的MIME类型"><a href="#数据的MIME类型" class="headerlink" title="数据的MIME类型"></a>数据的MIME类型</h3><p>上面的例子中，服务器应答是以html/text格式返回的，应用程序可以通过XMLHttpRequest的responseText属性访问应答信息；而当使用XML格式时，重要的是：服务器端应用程序返回的响应内容是MIME(Multipurpose Internet Mail Extension，对用途Internet邮件扩展)类型的text/xml属性，否则它最终不会出现在XMLHttpRequset对象的responseXML容器中。</p>
+<h4 id="在服务器端生成XML数据"><a href="#在服务器端生成XML数据" class="headerlink" title="在服务器端生成XML数据"></a>在服务器端生成XML数据</h4><p>用于创建Web服务的大多数编程语言（如PHP）大多都提供了一些库，通过他们生成XML数据是很容易的</p>
+<h4 id="在客户端处理XML数据"><a href="#在客户端处理XML数据" class="headerlink" title="在客户端处理XML数据"></a>在客户端处理XML数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;处理返回的数据</span><br><span class="line">function getCities()&#123;</span><br><span class="line">  if(xmlHttpRequest.readyState &#x3D;&#x3D; 4 &amp;&amp; xmlHttpObj.status &#x3D;&#x3D;&#x3D; 200)&#123;</span><br><span class="line">    try&#123;</span><br><span class="line">      &#x2F;&#x2F;访问城市选项</span><br><span class="line">      var citySelection &#x3D; document.getElementById(&quot;citySelection&quot;);</span><br><span class="line">      </span><br><span class="line">      &#x2F;&#x2F;在外部XML文档中也使用DOM方法</span><br><span class="line">      var citynodes &#x3D; xmlHttpObj.responseXML.getElementByTagName(&quot;city&quot;);</span><br><span class="line">      </span><br><span class="line">      &#x2F;&#x2F;遍历每个city节点</span><br><span class="line">      for(var i&#x3D;0; i&lt;citynodes.length; i++)&#123;</span><br><span class="line">        var name &#x3D; value &#x3D; null;</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F;查找相关联城市的显示名称和选项值</span><br><span class="line">        for(var j&#x3D;0; j&lt;citynodes[i].childNodes.length; j++)&#123;</span><br><span class="line">          var elem &#x3D; citynodes[i].childNodes[j].nodeName;</span><br><span class="line">          var nodevalue &#x3D; citynodes[i].childNodes[j].firstChild.nodeValue;</span><br><span class="line">          </span><br><span class="line">          if(elem &#x3D;&#x3D; &quot;value&quot;)&#123;</span><br><span class="line">            value &#x3D; nodeValue;</span><br><span class="line">          &#125; else &#123;</span><br><span class="line">            name &#x3D; nodevalue;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F;为下拉列表添加新选项</span><br><span class="line">        citySelection.options[i] &#x3D; new Option(name, value);</span><br><span class="line">    &#125;</span><br><span class="line">    &#125; catch(e) &#123;</span><br><span class="line">      alert(e.message);</span><br><span class="line">    &#125; </span><br><span class="line">  &#125; else if(xmlHttpObj.readyState &#x3D;&#x3D;4 &amp;&amp; xmlHttpObj.status !&#x3D;200)&#123;</span><br><span class="line">    document.getElementById(&quot;cities&quot;).innerHTML &#x3D; &quot;Error:preSearch Failed!&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h3><p>JSON是一种“轻量级的数据交换格式”。不是作为逗号分隔的字符串驶入链式引用，或者必须处理XML的复杂性，JSON提供了一种格式，该格式可以把服务器端结构转化成在实际中可以立即使用的JavaScript对象。</p>
+<p>JSON实际上使用JavaScript语法定义对象。对于对象，该语法包括一对大括号以及其中的成员</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">object&#123; &#125;  or object&#123; string: value...&#125;</span><br></pre></td></tr></table></figure>
+<p>对于数组而言，他是由一组元素加上一对方括号组成的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array[] or array[value, value, ..., value]</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript和JSON之间的一个主要区别在于JavaScript可以用单引号或双引号来引用字符串，而JSON只支持双引号。</p>
+<h2 id="jQuery-ajax-url-settings"><a href="#jQuery-ajax-url-settings" class="headerlink" title="jQuery.ajax(url,[settings])"></a>jQuery.ajax(url,[settings])</h2><p>说明：执行一个异步的http(ajax)请求。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>string</td>
+<td>一个用来包含发送请求的URL字符串</td>
+</tr>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>一个以”{键:值}”组成的ajax请求设置。所有选项都是可选的。可以使用%。ajaxSetup()设置任何默认参数。</td>
+</tr>
+</tbody></table>
+<h3 id="jQuery-ajax-settings"><a href="#jQuery-ajax-settings" class="headerlink" title="jQuery.ajax([settings])"></a><a href="http://www.jquery123.com/jQuery.ajax/" target="_blank" rel="noopener">jQuery.ajax([settings])</a></h3><p>点击上面的标题链接到jQuery API 中文文档 ajax 说明页面</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-number">1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-Ajax-World"><span class="toc-number">2.</span> <span class="toc-text">Hello Ajax World</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#XMLHttpRequest对象及请求的准备与发送"><span class="toc-number">2.1.</span> <span class="toc-text">XMLHttpRequest对象及请求的准备与发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XMLHttpRequeat对象的方法"><span class="toc-number">2.2.</span> <span class="toc-text">XMLHttpRequeat对象的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XMLHttpRequeat对象的属性"><span class="toc-number">2.3.</span> <span class="toc-text">XMLHttpRequeat对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP请求中常用的方法："><span class="toc-number">2.4.</span> <span class="toc-text">HTTP请求中常用的方法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax数据：XML或JSON"><span class="toc-number">3.</span> <span class="toc-text">Ajax数据：XML或JSON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据的MIME类型"><span class="toc-number">3.1.</span> <span class="toc-text">数据的MIME类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在服务器端生成XML数据"><span class="toc-number">3.1.1.</span> <span class="toc-text">在服务器端生成XML数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在客户端处理XML数据"><span class="toc-number">3.1.2.</span> <span class="toc-text">在客户端处理XML数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON"><span class="toc-number">3.2.</span> <span class="toc-text">JSON</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jQuery-ajax-url-settings"><span class="toc-number">4.</span> <span class="toc-text">jQuery.ajax(url,[settings])</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jQuery-ajax-settings"><span class="toc-number">4.1.</span> <span class="toc-text">jQuery.ajax([settings])</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2017/07/18/use-ajax/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2017/07/18/use-ajax/&text=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2017/07/18/use-ajax/&is_video=false&description=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Ajax($.ajax)&body=Check out this article: r0ger1tlearn.com/2017/07/18/use-ajax/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2017/07/18/use-ajax/&title=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2017/07/18/use-ajax/&name=使用 Ajax($.ajax)&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2017/07/18/use-ajax/&t=使用 Ajax($.ajax)" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

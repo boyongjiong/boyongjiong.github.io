@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="项目搭建（技术栈及需要配置的基础项）+ 项目脚手架（Create-React-App or Other scaffold） + 开发语言 ✔️ TypeScript or JavaScript + Flow(Static type checker for JavaScript) - 项目文件结构规划 + ESLint（ESLint-TypeScript or TSLint）&#x2F; husky &#x2F; li">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GDC Data Portal 技术调研及 GraphQL 学习实践">
+<meta property="og:url" content="r0ger1tlearn.com/2019/07/30/lifebit/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="项目搭建（技术栈及需要配置的基础项）+ 项目脚手架（Create-React-App or Other scaffold） + 开发语言 ✔️ TypeScript or JavaScript + Flow(Static type checker for JavaScript) - 项目文件结构规划 + ESLint（ESLint-TypeScript or TSLint）&#x2F; husky &#x2F; li">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tvax2.sinaimg.cn/large/a9034e0egy1gjvm9l7jjej20oq0eomzk.jpg">
+<meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvm9lkxcaj20ss0v4408.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/a9034e0egy1gjvm9lcq2yj21dk0pcdlc.jpg">
+<meta property="article:published_time" content="2019-07-30T02:10:59.000Z">
+<meta property="article:modified_time" content="2023-06-29T13:27:54.458Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tvax2.sinaimg.cn/large/a9034e0egy1gjvm9l7jjej20oq0eomzk.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>GDC Data Portal 技术调研及 GraphQL 学习实践</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/02/19/reading/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2019/07/30/lifebit/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2019/07/30/lifebit/&text=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2019/07/30/lifebit/&is_video=false&description=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GDC Data Portal 技术调研及 GraphQL 学习实践&body=Check out this article: r0ger1tlearn.com/2019/07/30/lifebit/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2019/07/30/lifebit/&name=GDC Data Portal 技术调研及 GraphQL 学习实践&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2019/07/30/lifebit/&t=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#项目搭建（技术栈及需要配置的基础项）"><span class="toc-number">1.</span> <span class="toc-text">项目搭建（技术栈及需要配置的基础项）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#涉及的新技术学习"><span class="toc-number">2.</span> <span class="toc-text">涉及的新技术学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目中遇到的新技术"><span class="toc-number">3.</span> <span class="toc-text">项目中遇到的新技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体的实践及-Demo-开发任务"><span class="toc-number">4.</span> <span class="toc-text">具体的实践及 Demo 开发任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关参考文章"><span class="toc-number">5.</span> <span class="toc-text">相关参考文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GDC-相关资源"><span class="toc-number">6.</span> <span class="toc-text">GDC 相关资源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDC-API-EndPoints"><span class="toc-number">6.1.</span> <span class="toc-text">GDC API EndPoints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Portal-graphql"><span class="toc-number">7.</span> <span class="toc-text">Portal-graphql</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Roadmap"><span class="toc-number">7.1.</span> <span class="toc-text">Roadmap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Short-Term"><span class="toc-number">7.1.1.</span> <span class="toc-text">Short Term</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Medium-Term"><span class="toc-number">7.1.2.</span> <span class="toc-text">Medium Term</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Long-Term"><span class="toc-number">7.1.3.</span> <span class="toc-text">Long Term</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        GDC Data Portal 技术调研及 GraphQL 学习实践
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-07-30T02:10:59.000Z" itemprop="datePublished">2019-07-30</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%B7%A5%E4%BD%9C%E5%90%91/">工作向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="项目搭建（技术栈及需要配置的基础项）"><a href="#项目搭建（技术栈及需要配置的基础项）" class="headerlink" title="项目搭建（技术栈及需要配置的基础项）"></a>项目搭建（技术栈及需要配置的基础项）</h2><pre><code>+ 项目脚手架（Create-React-App or Other scaffold）
++ 开发语言 ✔️ TypeScript or JavaScript + Flow(Static type checker for JavaScript)
+- 项目文件结构规划
++ ESLint（ESLint-TypeScript or TSLint）/ husky / lint-staged / prettier
++ 规范 `commit-message` 
+- React App style language 选型 (styled-components ❎ less sass css-in-javascript❎（结构不太好控制，需要把组件拆分的特别好，不然感觉写出来的都是一坨屎）)
+- 配置 iconfont 项目，之后小的图标直接用 iconfont 维护（可跟设计沟通提供 svg 资源）</code></pre><h2 id="涉及的新技术学习"><a href="#涉及的新技术学习" class="headerlink" title="涉及的新技术学习"></a>涉及的新技术学习</h2><p><a href="https://facebook.github.io/relay/" target="_blank" rel="noopener">Relay</a> - JavaScript framework for building data-driven React Applications<br><a href="http://redux.js.org/" target="_blank" rel="noopener">Redux</a> - Predictable state container for JavaScript Apps<br><a href="https://github.com/acdlite/recompose" target="_blank" rel="noopener">Recompose</a> - React utility belt for function components and higher-order components（now we can use react hooks to do these things）::No more new features::<br><a href="https://reactjs.org/docs/hooks-intro.html" target="_blank" rel="noopener">React Hooks Doc</a> - Hooks are a new addition in React 16.8. They let you use state and other React features without writing a class ::Recommend::<br><a href="https://facebook.github.io/jest/" target="_blank" rel="noopener">Jest</a> - Delightful JavaScript testing<br><a href="https://d3js.org/" target="_blank" rel="noopener">D3</a> - Data-Driven Documents</p>
+<p><strong>Graphql-node 相关</strong><br><a href="https://github.com/prisma/graphql-yoga" target="_blank" rel="noopener">graphql-yoga</a> - Fully-featured GraphQL Server with focus on easy setup, performance &amp; great developer experience<br><a href="https://www.prisma.io/" target="_blank" rel="noopener">Prisma</a> - Database Tools for modern application development<br><a href="https://www.graph.cool/docs/" target="_blank" rel="noopener">Graphcool</a> - Open-source and self-hosted backend-as-a-service to develop serverless GraphQL backends. The Graphcool Framework offers an opionated backend setup, including GraphQL database mapping, subscriptions &amp; permission system.<br><a href="https://github.com/graphql/dataloader" target="_blank" rel="noopener">DataLoader</a> - DataLoader is a generic utility to be used as part of your application’s data fetching layer to provide a consistent API over various backends and reduce requests to those backends via batching and catching.</p>
+<p><strong>Elasticsearch 相关</strong><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.0/getting-started.html#getting-started" target="_blank" rel="noopener">Elasticsearch Reference 6.0</a> - Elasticsearch is a highly scalable open-source full-text search and analytics engine. It allows you to store, search, and analyze big volumes of data quickly and in near real time.<br><a href="https://github.com/appbaseio/dejavu" target="_blank" rel="noopener">appbaseio/dejavu</a> - The Missing Web UI for Elasticsearch: Import, browse and edit data with rich filters and query views, create search UIs visually.<br><img src="https://tvax2.sinaimg.cn/large/a9034e0egy1gjvm9l7jjej20oq0eomzk.jpg" alt="112BA68F-561B-4DBF-933A-44B8B841B6E8"></p>
+<h2 id="项目中遇到的新技术"><a href="#项目中遇到的新技术" class="headerlink" title="项目中遇到的新技术"></a>项目中遇到的新技术</h2><p><a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis CI</a> - Test and Deploy with Confidence. Easily sync your GitHub projects with Travis CI and you’ll be testing your code in minutes!</p>
+<h2 id="具体的实践及-Demo-开发任务"><a href="#具体的实践及-Demo-开发任务" class="headerlink" title="具体的实践及 Demo 开发任务"></a>具体的实践及 Demo 开发任务</h2><pre><code>+ 阅读 [GraphQL](https://graphql.org/learn/) 官网学习文档，并整理笔记
++ React + Apollo 开发方式实践 (~/Documents/Github/GraphQL/hackernews-react-apollo)
+- React + Relay 开发方式实践 【WIP】</code></pre><p>对上面两种方式进行对比，分别做出数据流动图，并主要分析其优劣，使用体验做对比<br><em>区别：</em><br>    1. 配置方便程度：Apollo【easy】— Relay-with typescript【hard】<br>    2. 使用方便程度：<br>    3. 代码可读性：<br>    4. 开发配置流程：</p>
+<pre><code>+ 后端实践 GraphQL + Node.js (~/Documents/Github/GraphQL/hackernews-node)
+- 整理 protal-ui &amp; portal-graphql 项目架构及细节实现
+- elasticsearch 文档阅读</code></pre><h2 id="相关参考文章"><a href="#相关参考文章" class="headerlink" title="相关参考文章"></a>相关参考文章</h2><ol>
+<li><a href="https://benmccormick.org/2017/02/26/running-jest-tests-before-each-git-commit/" target="_blank" rel="noopener">Running Jest Tests Before Each Git Commit</a> 提供了测试的思路，代码提交时对修改的模块相关功能进行测试，这样就可以保证高效性，不会阻塞工作流</li>
+<li><a href="https://www.howtographql.com/" target="_blank" rel="noopener">The FullStack Tutorial for GraphQL</a> - The free and open-source tutorial to learn all around GraphQL to go from zero to production.  <a href="http://howtographql.cn/" target="_blank" rel="noopener">中文文档</a> 但好像更新不及时啊这个中文文档，所以最好还是看英文的</li>
+<li><a href="https://www.infoq.cn/article/xZ0ws6_A5jmrJ6ZTPOz8" target="_blank" rel="noopener">GraphQL-BFF：微服务背景下的前后端数据交互方案</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651017395&idx=3&sn=ab0b3c87c20d4cdaad82321764195210&chksm=bdbea8e08ac921f6daca34dcb359d77fff2dcfd7fc6d256245dbb3cb2c504755c62066cc0f6f&scene=27#wechat_redirect" target="_blank" rel="noopener">2019年13大 graphql 库和工具</a><a href="https://www.infoq.cn/article/bl*EA59lRYDE9XlkJGg0" target="_blank" rel="noopener">another source</a></li>
+<li><a href="https://www.prisma.io/blog/getting-started-with-relay-modern-46f8de6bd6ec/" target="_blank" rel="noopener">Getting Started with Relay Modern</a> - This is a step-by-step tutorial with the goal of building a simple Instagram application from scratch using create-react-app.</li>
+<li><a href="https://www.prisma.io/blog/graphql-server-basics-the-schema-ac5e2950214e" target="_blank" rel="noopener">GraphQL server Basics: GraphQL Schemas, TypeDefs &amp; Resolvers Explained</a></li>
+<li><a href="https://www.tortilla.academy/Urigo/WhatsApp-Clone-Tutorial/master/next/step/0" target="_blank" rel="noopener">A React based WhatsApp Clone</a> - WhatsApp Clone is a free and open-source tutorial that will guide you step-by-step on how to create a full-stack, mobile, hybrid web application from scratch.</li>
+</ol>
+<p><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvm9lkxcaj20ss0v4408.jpg" alt="graph-before-after-eca5096e70676c1116c7a579d9db128e"></p>
+<h2 id="GDC-相关资源"><a href="#GDC-相关资源" class="headerlink" title="GDC 相关资源"></a>GDC 相关资源</h2><h3 id="GDC-API-EndPoints"><a href="#GDC-API-EndPoints" class="headerlink" title="GDC API EndPoints"></a>GDC API EndPoints</h3><p>Communicating with the GDC API involves making calls to API endpoints. Each GDC API endpoint represents specific API functionality, as summarized in the following table:</p>
+<p>| Endpoint | Type | Description |<br>| — | — | — |<br>| <strong>status</strong> | Status | Get the API status and version information |<br>| <strong>projects</strong> | Search &amp; Retrieval | Search all data generated by a project |<br>| <strong>cases</strong> | Search &amp; Retrieval | Find all files related to a specific case, or sample donor |<br>| <strong>files</strong> | Search &amp; Retrieval | Find all files related to a specific characteristics such as file_name, md5sum, data_format and others |<br>| <strong>annotations</strong> | Search &amp; Retrieval | Search annotations added to data after curation |<br>| <strong>data</strong> | Download | Used to download GDC data |<br>| <strong>manifest</strong> | Download | Generates manifests for use with GDC Data Transfer Tool |<br>| <strong>slicing</strong> | BAM Slicing | Allows remote slicing of BAM format objects |<br>| <strong>submission</strong> | Submission | Returns the available resources at the top level above programs i.e., registered programs |</p>
+<h2 id="Portal-graphql"><a href="#Portal-graphql" class="headerlink" title="Portal-graphql"></a>Portal-graphql</h2><p>All of the graphql related code has been migrated to <a href="https://github.com/overture-stack/arranger" target="_blank" rel="noopener">arranger</a> - Generate and manage your own genomic data portal.</p>
+<p><img src="https://tva1.sinaimg.cn/large/a9034e0egy1gjvm9lcq2yj21dk0pcdlc.jpg" alt="68747470733a2f2f692e696d6775722e636f6d2f596c6d396472722e706e67"></p>
+<h3 id="Roadmap"><a href="#Roadmap" class="headerlink" title="Roadmap"></a>Roadmap</h3><h4 id="Short-Term"><a href="#Short-Term" class="headerlink" title="Short Term"></a>Short Term</h4><pre><code>* cli tool for bootstrapping new projects
+* Provide all neceaasry modules to implement searching functionality
+    * Dynamic GraphQL schema generation
+    * API Server (GraphQL endpoint)
+    * Query / Aggregation building middleware
+    * Response middleware (i.e. removing null aggregations)
+    * UI Components
+        * Aggregations
+            * Simple View
+            * Advanced View
+        * Results Table
+        * SQON Display
+* Provide editor interface to expose common transformations (similar to the Babel or bodybuilder REPLs)
+    * Elasticsearch Mappings -&gt; GraphQL Schema
+    * GraphQL Query -&gt; Elasticsearch Queries</code></pre><h4 id="Medium-Term"><a href="#Medium-Term" class="headerlink" title="Medium Term"></a>Medium Term</h4><pre><code>* Authentication
+* Sets
+* Analysis</code></pre><h4 id="Long-Term"><a href="#Long-Term" class="headerlink" title="Long Term"></a>Long Term</h4><pre><code>* Kibana Plugin
+* Hosted Data Portal generating service</code></pre>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#项目搭建（技术栈及需要配置的基础项）"><span class="toc-number">1.</span> <span class="toc-text">项目搭建（技术栈及需要配置的基础项）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#涉及的新技术学习"><span class="toc-number">2.</span> <span class="toc-text">涉及的新技术学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目中遇到的新技术"><span class="toc-number">3.</span> <span class="toc-text">项目中遇到的新技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体的实践及-Demo-开发任务"><span class="toc-number">4.</span> <span class="toc-text">具体的实践及 Demo 开发任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关参考文章"><span class="toc-number">5.</span> <span class="toc-text">相关参考文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GDC-相关资源"><span class="toc-number">6.</span> <span class="toc-text">GDC 相关资源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GDC-API-EndPoints"><span class="toc-number">6.1.</span> <span class="toc-text">GDC API EndPoints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Portal-graphql"><span class="toc-number">7.</span> <span class="toc-text">Portal-graphql</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Roadmap"><span class="toc-number">7.1.</span> <span class="toc-text">Roadmap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Short-Term"><span class="toc-number">7.1.1.</span> <span class="toc-text">Short Term</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Medium-Term"><span class="toc-number">7.1.2.</span> <span class="toc-text">Medium Term</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Long-Term"><span class="toc-number">7.1.3.</span> <span class="toc-text">Long Term</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2019/07/30/lifebit/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2019/07/30/lifebit/&text=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2019/07/30/lifebit/&is_video=false&description=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GDC Data Portal 技术调研及 GraphQL 学习实践&body=Check out this article: r0ger1tlearn.com/2019/07/30/lifebit/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2019/07/30/lifebit/&title=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2019/07/30/lifebit/&name=GDC Data Portal 技术调研及 GraphQL 学习实践&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2019/07/30/lifebit/&t=GDC Data Portal 技术调研及 GraphQL 学习实践" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

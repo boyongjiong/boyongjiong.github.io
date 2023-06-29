@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="实现回调函数的基本原理回调函数并不复杂，但是在我们开始创建并使用回调函数之前，我们应该熟悉几个实现回调函数的基本原理。 使用命名或匿名函数作为回调在前面的jQuery例子以及forEach的例子中，我们使用了在参数位置定义的匿名函数作为回调函数。这是在回调函数使用中的一种普遍的魔术。另一种常见的模式是定义一个命名函数并将函数名作为变量传递给函数。比如下面的例子： 12345678910111213">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解和使用JavaScript中的回调函数">
+<meta property="og:url" content="r0ger1tlearn.com/2017/08/26/javascript-callback-usage/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="实现回调函数的基本原理回调函数并不复杂，但是在我们开始创建并使用回调函数之前，我们应该熟悉几个实现回调函数的基本原理。 使用命名或匿名函数作为回调在前面的jQuery例子以及forEach的例子中，我们使用了在参数位置定义的匿名函数作为回调函数。这是在回调函数使用中的一种普遍的魔术。另一种常见的模式是定义一个命名函数并将函数名作为变量传递给函数。比如下面的例子： 12345678910111213">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-08-26T04:51:26.000Z">
+<meta property="article:modified_time" content="2023-06-29T12:22:18.843Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>理解和使用JavaScript中的回调函数</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/09/09/css-selectors/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/08/20/javascript-event-loop/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&text=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&is_video=false&description=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=理解和使用JavaScript中的回调函数&body=Check out this article: r0ger1tlearn.com/2017/08/26/javascript-callback-usage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&name=理解和使用JavaScript中的回调函数&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&t=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现回调函数的基本原理"><span class="toc-number">1.</span> <span class="toc-text">实现回调函数的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用命名或匿名函数作为回调"><span class="toc-number">1.1.</span> <span class="toc-text">使用命名或匿名函数作为回调</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传递参数给回调函数"><span class="toc-number">2.</span> <span class="toc-text">传递参数给回调函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在执行之前确保回调函数是一个函数"><span class="toc-number">2.1.</span> <span class="toc-text">在执行之前确保回调函数是一个函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用this对象的方法作为回调函数时的问题"><span class="toc-number">2.2.</span> <span class="toc-text">使用this对象的方法作为回调函数时的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Call和Apply函数来保存this"><span class="toc-number">2.3.</span> <span class="toc-text">使用Call和Apply函数来保存this</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#允许多重回调函数"><span class="toc-number">2.4.</span> <span class="toc-text">允许多重回调函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#“回调地狱”问题以及解决方案"><span class="toc-number">3.</span> <span class="toc-text">“回调地狱”问题以及解决方案</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        理解和使用JavaScript中的回调函数
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-08-26T04:51:26.000Z" itemprop="datePublished">2017-08-26</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="实现回调函数的基本原理"><a href="#实现回调函数的基本原理" class="headerlink" title="实现回调函数的基本原理"></a>实现回调函数的基本原理</h2><p>回调函数并不复杂，但是在我们开始创建并使用回调函数之前，我们应该熟悉几个实现回调函数的基本原理。</p>
+<h3 id="使用命名或匿名函数作为回调"><a href="#使用命名或匿名函数作为回调" class="headerlink" title="使用命名或匿名函数作为回调"></a>使用命名或匿名函数作为回调</h3><p>在前面的jQuery例子以及forEach的例子中，我们使用了在参数位置定义的匿名函数作为回调函数。这是在回调函数使用中的一种普遍的魔术。另一种常见的模式是定义一个命名函数并将函数名作为变量传递给函数。比如下面的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 全局变量</span><br><span class="line">var allUserData &#x3D; [];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 普通的logStuff函数，将内容打印到控制台</span><br><span class="line">function logStuff(userData) &#123;</span><br><span class="line">  if(typeof userData &#x3D;&#x3D;&#x3D; &quot;string&quot;) &#123;</span><br><span class="line">    console.log(userData);</span><br><span class="line">  &#125; else if(typeof userData &#x3D;&#x3D;&#x3D; &quot;object&quot;) &#123;</span><br><span class="line">    for(var item in userData) &#123;</span><br><span class="line">      console.log(item + &quot;:&quot; + userData[item]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 一个接收两个参数的函数，后面一个是回调函数</span><br><span class="line">function getInput(options, callback) &#123;</span><br><span class="line">  allUserData.push(options);</span><br><span class="line">  callback(options);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 当我们调用getInput函数时，我们将logStuff作为一个参数传递给它</span><br><span class="line">&#x2F;&#x2F; 因此logStuff将会在getInput函数内被回调（或执行）</span><br><span class="line"></span><br><span class="line">getInput(&#123;name: &quot;Rich&quot;, speciality: &quot;JavaScript&quot;, logStuff&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="传递参数给回调函数"><a href="#传递参数给回调函数" class="headerlink" title="传递参数给回调函数"></a>传递参数给回调函数</h2><p>既然回调函数在执行时仅仅是一个普通函数，我们就能给它传递参数。我们能够传递任何包含它的函数的属性（或者全局属性）作为回调函数的参数。在前面的例子中，我们将options作为一个参数传递给了回调函数。现在我们传递一个全局变量和一个本地变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 全局变量</span><br><span class="line">var generalLastName &#x3D; &quot;Cliton&quot;;</span><br><span class="line"></span><br><span class="line">function getInput(options, callback) &#123;</span><br><span class="line">  allUserData.push(options);</span><br><span class="line">  &#x2F;&#x2F;将全局变量generalLastName传递给回调函数</span><br><span class="line">  callback(generalLastName, options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="在执行之前确保回调函数是一个函数"><a href="#在执行之前确保回调函数是一个函数" class="headerlink" title="在执行之前确保回调函数是一个函数"></a>在执行之前确保回调函数是一个函数</h3><p>在调用之前检查作为参数被传递的回调函数确实是一个函数，这样的做法是明智的。同时，这也是一个实现条件回调函数的最佳时间。</p>
+<p>我们来重构上面例子中的getInput函数来确保检查是恰当的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function getInput(options, callback) &#123;</span><br><span class="line">  allUserData.push(options);</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 确保callback是一个函数</span><br><span class="line">  if(typeof callback &#x3D;&#x3D;&#x3D; &quot;function&quot;) &#123;</span><br><span class="line">    &#x2F;&#x2F; 调用它，既然我们已经确定了它是可调用的</span><br><span class="line">    callback(options);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果没有适当的检查，如果getInput的参数中没有一个回调函数或者传递的回调函数事实上并不是一个函数，我们的代码将会导致运行错误。</p>
+<h3 id="使用this对象的方法作为回调函数时的问题"><a href="#使用this对象的方法作为回调函数时的问题" class="headerlink" title="使用this对象的方法作为回调函数时的问题"></a>使用this对象的方法作为回调函数时的问题</h3><p>当回调函数是一个this对象的方法时，我们必须改变执行回调函数的方法来保证this对象的上下文。否则如果回调函数被传递给一个全局函数，this对象要么指向全局window对象（浏览器环境下），要么指向包含方法的对象。</p>
+<p>//定义一个拥有一些属性和一个方法的对象<br>//我们接着会把方法作为回调函数传递给另一个函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var clientData &#x3D; &#123;</span><br><span class="line">  id: 094545,</span><br><span class="line">  fullName: &quot;Not Set&quot;,</span><br><span class="line">  &#x2F;&#x2F;setUserName 是一个在clientData对象中的方法</span><br><span class="line">  setUserName: function(firstName, lastName)&#123;</span><br><span class="line">    &#x2F;&#x2F;这指向了对象中的fullName属性</span><br><span class="line">    this.fullName &#x3D; firstName + &quot; &quot; + lastName;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getUserInput(firstName, lastName, callback) &#123;</span><br><span class="line">  &#x2F;&#x2F;在这做些什么来确认firstName&#x2F;lastName</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F; 现在存储names</span><br><span class="line">  callback(firstName, lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在下面你的代码例子中，当clientData.setUserName被调用执行时，this.fullName并没有设置clientData对象中的fullName属性。相反，它将设置window对象中的fullName属性，因为getUserInput是一个全局函数。全局函数中的this对象指向window对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">getUserInput(&quot;Barack&quot;, &quot;Obama&quot;, clientData.setUserName);</span><br><span class="line"></span><br><span class="line">console.log(clientData.fullName);  &#x2F;&#x2F; Not Set</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; fullName属性将在window对象中被初始化</span><br><span class="line">console.log(window.fullName); &#x2F;&#x2F;Barack Obama</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Call和Apply函数来保存this"><a href="#使用Call和Apply函数来保存this" class="headerlink" title="使用Call和Apply函数来保存this"></a>使用Call和Apply函数来保存this</h3><p>我们可以使用Call或者Apply函数来修复上面的问题。我们知道每个JavaScript中的函数都有两个方法：Call和Apply。这些方法被用来设置函数内部的this对象以及给此函数传递的变量。</p>
+<p>call接收的第一个参数为被用来在函数内部当做this的对象，传递给函数的参数被挨个儿传递（使用逗号分开）。Apply函数的第一个参数也是在函数内部作为this的对象，然而最后一个参数却是传递给函数的值的数组。</p>
+<p>看我们如何使用Apply修复前面的例子中出现的问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 注意我们增加了新的参数作为回调对象， 叫做callbackObj</span><br><span class="line">function getUserInput(firstName, lastName, callback, callbackObj) &#123;</span><br><span class="line">  &#x2F;&#x2F; 在这里来确认名字</span><br><span class="line">  callback.apply(callbackObj, [firstName, lastName]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用Apply函数正确的设置了this对象，我们现在能正确的执行callback并在clientData对象中正确设置fullName属性了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 我们将clientData.setUserName方法和 clientData对象作为参数，clientData对象会被Apply方法使用来设置this对象</span><br><span class="line"></span><br><span class="line">getUserName(&quot;Barack&quot;, &quot;Obama&quot;, clientData.setUserName, clientData);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; clientData中的fullName属性被正确的设置</span><br><span class="line">console.log(clientUser.fullName);  &#x2F;&#x2F; Barack Obama</span><br></pre></td></tr></table></figure>
+<p>我们也可以使用Call函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 注意我们增加了新的参数作为回调对象， 叫做callbackObj</span><br><span class="line">function getUserInput(firstName, lastName, callback, callbackObj) &#123;</span><br><span class="line">  &#x2F;&#x2F; 在这里来确认名字</span><br><span class="line">  callback.call(callbackObj, firstName, lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="允许多重回调函数"><a href="#允许多重回调函数" class="headerlink" title="允许多重回调函数"></a>允许多重回调函数</h3><p>我们可以将不止一个的回调函数作为参数传递给一个函数，就像我们能够传递不止一个变量一样。这里有一个jQuery中ajax的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function successCallback() &#123;</span><br><span class="line">  &#x2F;&#x2F; 在信息被成功接收之后做点什么</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function completeCallback() &#123;</span><br><span class="line">  &#x2F;&#x2F; 在完成之后做点什么</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function errorCallback() &#123;</span><br><span class="line">  &#x2F;&#x2F; 当错误发生时做点什么</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">  url: &quot;http:&#x2F;&#x2F;fiddle.jshell.net&#x2F;favicon.png&quot;,</span><br><span class="line">  success: successCallback,</span><br><span class="line">  complete: completeCallback,</span><br><span class="line">  error: errorCallback</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="“回调地狱”问题以及解决方案"><a href="#“回调地狱”问题以及解决方案" class="headerlink" title="“回调地狱”问题以及解决方案"></a>“回调地狱”问题以及解决方案</h2><p>在执行异步代码时，无论以什么顺序简单的执行代码，经常情况会变成许多层级的回调函数堆积以致代码变成以下的情形。这些杂乱无章的代码叫做回调地狱（因为回调太多而导致看懂代码变得异常困难），如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var p_client &#x3D; new Db(&#39;integration_tests_20&#39;, new Server(&quot;127.0.0.1&quot;, 27017, &#123;&#125;), &#123;&#39;pk&#39;:CustomPKFactory&#125;);</span><br><span class="line">p_client.open(function(err, p_client) &#123;</span><br><span class="line">  p_client.dropDatabase(function(err, done) &#123;</span><br><span class="line">    p_client.createCollection(&#39;test_custom_key&#39;, function(err, collection) &#123;</span><br><span class="line">      collection.insert(&#123;&#39;a&#39;:1&#125;, function(err, docs) &#123;</span><br><span class="line">        collection.find(&#123;&#39;_id&#39;:new ObjectID(&quot;aaaaaaaaaaaa&quot;)&#125;, function(err, cursor) &#123;</span><br><span class="line">          cursor.toArray(function(err, items) &#123;</span><br><span class="line">            test.assertEquals(1, items.length);</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; Let&#39;s close the db</span><br><span class="line">            p_client.close();</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>关于这个问题的两种解决方案</strong></p>
+<ul>
+<li>给你的函数命名并传递他们的名字作为回调函数，而不是主函数的参数中定义匿名函数</li>
+<li>模块化 将你的代码分隔到模块中，这样你就可以导出一块代码来完成特定的工作。然后你可以在你的巨型应用中导入模块</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现回调函数的基本原理"><span class="toc-number">1.</span> <span class="toc-text">实现回调函数的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用命名或匿名函数作为回调"><span class="toc-number">1.1.</span> <span class="toc-text">使用命名或匿名函数作为回调</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传递参数给回调函数"><span class="toc-number">2.</span> <span class="toc-text">传递参数给回调函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在执行之前确保回调函数是一个函数"><span class="toc-number">2.1.</span> <span class="toc-text">在执行之前确保回调函数是一个函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用this对象的方法作为回调函数时的问题"><span class="toc-number">2.2.</span> <span class="toc-text">使用this对象的方法作为回调函数时的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Call和Apply函数来保存this"><span class="toc-number">2.3.</span> <span class="toc-text">使用Call和Apply函数来保存this</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#允许多重回调函数"><span class="toc-number">2.4.</span> <span class="toc-text">允许多重回调函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#“回调地狱”问题以及解决方案"><span class="toc-number">3.</span> <span class="toc-text">“回调地狱”问题以及解决方案</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&text=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&is_video=false&description=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=理解和使用JavaScript中的回调函数&body=Check out this article: r0ger1tlearn.com/2017/08/26/javascript-callback-usage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&title=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&name=理解和使用JavaScript中的回调函数&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2017/08/26/javascript-callback-usage/&t=理解和使用JavaScript中的回调函数" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Github Pages 自定义域名获取对 HTTPS 的支持 [原文]Custom domains on GitHub Pages gain support for HTTPS - The GitHub Blog Today, custom domains on GitHub Pages are gaining support for HTTPS.如今，GitHub Pages 上的自定义域名正">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS">
+<meta property="og:url" content="r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="Github Pages 自定义域名获取对 HTTPS 的支持 [原文]Custom domains on GitHub Pages gain support for HTTPS - The GitHub Blog Today, custom domains on GitHub Pages are gaining support for HTTPS.如今，GitHub Pages 上的自定义域名正">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/a9034e0egy1gjvly5zewjj20xc0hi74o.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/a9034e0egy1gjvly5swhfj21um0kmwir.jpg">
+<meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvly65bkej216g196wh8.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/a9034e0egy1gjvly6irsbj21fs0y6afz.jpg">
+<meta property="article:published_time" content="2019-10-19T08:24:24.000Z">
+<meta property="article:modified_time" content="2023-06-29T13:27:54.453Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva3.sinaimg.cn/large/a9034e0egy1gjvly5zewjj20xc0hi74o.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/03/02/handling-null-and-undefined-in-javascript/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/07/30/lifebit/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&text=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&is_video=false&description=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS&body=Check out this article: r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&name=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&t=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuring-your-domain（配置您的域名）"><span class="toc-number">1.</span> <span class="toc-text">Configuring your domain（配置您的域名）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Faster-site-load-times（提升网站加载速度）"><span class="toc-number">2.</span> <span class="toc-text">Faster site load times（提升网站加载速度）</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        &lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-19T08:24:24.000Z" itemprop="datePublished">2019-10-19</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E8%8B%B1%E6%96%87%E5%90%91/">英文向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><strong>Github Pages 自定义域名获取对 HTTPS 的支持</strong></p>
+<p><a href="https://github.blog/2018-05-01-github-pages-custom-domains-https/" target="_blank" rel="noopener">[原文]Custom domains on GitHub Pages gain support for HTTPS - The GitHub Blog</a></p>
+<p>Today, custom domains on GitHub Pages are gaining support for HTTPS.<br>如今，GitHub Pages 上的自定义域名正在获得对HTTPS的支持。<br>￼<img src="https://tva3.sinaimg.cn/large/a9034e0egy1gjvly5zewjj20xc0hi74o.jpg" alt="2018-05-01-github-pages-custom-domains-lock"></p>
+<p>Github Pages is the best way to quickly publish beautiful websites for you and your projects. Just edit, push, and your changes are live. GitHub Pages has supported custom domains since 2009, and sites on the <code>*.github.io</code> domain have supported HTTPS since 2016. Today, custom domains on GitHub Pages are gaining support for HTTPS as well, meaning over a million GitHub Pages will be served over HTTPS.<br>Github Pages 是为您和您的项目快速发布漂亮的网站最好的方式。仅通过编辑、推送，您的修改就上线了。GitHub Pages 自从 2009 年开始支持自定义域名（custom domains），并且从 2016 年让所有的<code>*.github.io</code> 域名支持HTTPS。而现在，Github Pages 上的自定义域名也正在获得对 HTTPS 的支持，意味着超过百万的 Github Pages 将通过 HTTPS 提供服务。</p>
+<p>HTTPS(most recognizable as the lock icon in your browser’s address bar) encrypts traffic between Github’s servers and your browser giving you confidence that the page you asked for is the page you’re reading, from the site you think it is, and that others can’t snoop on or modify its contents along the way.<br>HTTPS（最容易辨认的是浏览器地址栏中的锁图标）对GitHub服务器和浏览器之间的流量进行加密，让你确信你要求的页面是你正在阅读的页面，来自你认为的网站，并且其他人无法窥探或修改其内容。</p>
+<p>We have partnered with the certificate authority <a href="https://letsencrypt.org/" target="_blank" rel="noopener">Let’s Encrypt</a> on this project. As supporters of Let’s Encrypt’s mission to make the wen more secure for everyone, we’ve officially become Silver-level sponsors of the initiative.<br>我们已经与证书颁发机构Let’s Encrypt合作开展此项目。作为Let’s Encrypt的支持者，我们已经正式成为该计划的银级赞助商。</p>
+<h2 id="Configuring-your-domain（配置您的域名）"><a href="#Configuring-your-domain（配置您的域名）" class="headerlink" title="Configuring your domain（配置您的域名）"></a>Configuring your domain（配置您的域名）</h2><p>Action may be required on your part to secure your custom domain.<br>您可能需要采取一些行动来保护您的自定义域名。</p>
+<p>If you are using <code>CNAME</code> or <code>ALIAS</code> records for your custom domain, you’re all set and your site should be accessible over HTTPS. If it is, and your site loads correctly over HTTPS, you can optionally enforce HTTPS in your repository’s setting. Users who request your site over HTTP will be upgraded to HTTPS.<br>如果您使用 CNAME 或 ALIAS 记录来保护您的自定义域，您已经准备就绪并且您的网站应该可以通过 HTTPS 访问。如果是这样，并且您的网站通过HTTPS正确加载，您可以在您的版本库设置中选择强制执行HTTPS。通过HTTP请求您的网站的用户将被升级到HTTPS。<br>域名解析时，记录类型选择 CNAME，记录值直接使用 <code>&lt;your name&gt;.github.io</code> 即可；最后确认 <code>Enforce HTTPS</code> 选框选中。<br><img src="https://tva1.sinaimg.cn/large/a9034e0egy1gjvly5swhfj21um0kmwir.jpg" alt="2D7E467D-2897-45E9-92CE-9214C35C77D6"><br><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvly65bkej216g196wh8.jpg" alt="A22BC560-9CFC-4BF3-A2A8-2BFE91BB1408"><br><img src="https://tva2.sinaimg.cn/large/a9034e0egy1gjvly6irsbj21fs0y6afz.jpg" alt="B1936EFD-EC60-473E-8857-7642F6EEC3FC"></p>
+<p>If you are using <code>A</code> records, you must update your site’s DNS records with new IP addresses. Please <a href="https://help.github.com/articles/setting-up-an-apex-domain/" target="_blank" rel="noopener">see our guide to setting up your custom domain with Pages and update any A records you might have set</a>.<br>如果你正在使用A记录，你必须用新的IP地址更新你网站的DNS记录。请参阅我们的指南，设置你Pages的自定义域名并更新任何你可能已经设置A记录。</p>
+<p>Once your updated DNS records have propagated, and you’ve confirmed that your site loads correctly over HTTPS, you can optionally <code>&quot;Endorce HTTPS&quot; for your domain</code> in your repository’s settings, ensuring users who request your site over HTTP are upgraded to HTTPS.<br>一旦你更新的 DNS 记录被传播，并且你已经确认你的网站通过 HTTPS 正确加载，你可以在你的Repository的设置中为你的域名选择 “强制执行 HTTPS”，确保通过 HTTP 请求你的网站的用户升级到 HTTPS。</p>
+<h2 id="Faster-site-load-times（提升网站加载速度）"><a href="#Faster-site-load-times（提升网站加载速度）" class="headerlink" title="Faster site load times（提升网站加载速度）"></a>Faster site load times（提升网站加载速度）</h2><p>These new IP addresses don’t just allow us to serve your site over HTTPS, but also places your site behind a <a href="http://en.wikipedia.org/wiki/Content_delivery_network" target="_blank" rel="noopener">content delivery network(CDN)</a>, allowing us to serve your site from data centers around the world at fast speeds, and offering additional protection against <a href="http://en.wikipedia.org/wiki/Denial-of-service_attack" target="_blank" rel="noopener">DDoS attack</a>. While the previous IP addresses will remain available for a transition period, we recommend you migrate to the new IP addresses to gain these benefits.<br>这些新的IP地址不仅让我们能够通过HTTPS为您的网站提供服务，而且还将您的网站置于内容交付网络（CDN）的后面，使我们能够从世界各地的数据中心以快速的速度为您的网站提供服务，并提供额外的DDoS攻击保护。虽然之前的IP地址在过渡期内仍然可用，但我们建议您迁移到新的IP地址以获得这些好处。</p>
+<p>HTTPS is immediately available for all Github Pages sites. Learn more <a href="https://help.github.com/articles/securing-your-github-pages-site-with-https/" target="_blank" rel="noopener">in our documentation for the feature</a>. Having trouble? <a href="https://github.com/contact?form%5Bsubject%5D=GitHub%20Pages%20HTTPS%20for%20Custom%20Domains" target="_blank" rel="noopener">Drop up a line</a>.<br>所有GitHub Pages网站都可以立即使用HTTPS。在我们的文档中了解更多关于该功能的信息。有问题？请给我们留言。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuring-your-domain（配置您的域名）"><span class="toc-number">1.</span> <span class="toc-text">Configuring your domain（配置您的域名）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Faster-site-load-times（提升网站加载速度）"><span class="toc-number">2.</span> <span class="toc-text">Faster site load times（提升网站加载速度）</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&text=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&is_video=false&description=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS&body=Check out this article: r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&title=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&name=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2019/10/19/custom-domains-on-github-pages-gain-support-for-https/&t=&lt;译&gt;Custom domains on GitHub Pages gain support for HTTPS" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

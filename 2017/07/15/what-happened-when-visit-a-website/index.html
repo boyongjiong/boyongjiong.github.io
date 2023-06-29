@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1.首先是输入网址以www.google.com为例  2.浏览器查找域名对应IP2.1 DNS查找过程 浏览器缓存——浏览器会记录DNS一段时间（2-30分钟不等，视浏览器而定） 系统缓存——浏览器里面没找到DNS缓存，此时浏览器做一个系统调用（Windows下是gethostbyname）。如发现匹配则采用。（与此对应有host恶意劫持更改攻击） 路由器缓存——路由器也会有DNS缓存（缓存你上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="输入网址后发生了什么？">
+<meta property="og:url" content="r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="1.首先是输入网址以www.google.com为例  2.浏览器查找域名对应IP2.1 DNS查找过程 浏览器缓存——浏览器会记录DNS一段时间（2-30分钟不等，视浏览器而定） 系统缓存——浏览器里面没找到DNS缓存，此时浏览器做一个系统调用（Windows下是gethostbyname）。如发现匹配则采用。（与此对应有host恶意劫持更改攻击） 路由器缓存——路由器也会有DNS缓存（缓存你上">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://static.zybuluo.com/boyongjiong/hjgheu5zg6epft7fpstoovfl/screenshot.png">
+<meta property="article:published_time" content="2017-07-15T04:01:44.000Z">
+<meta property="article:modified_time" content="2023-06-29T12:22:18.848Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://static.zybuluo.com/boyongjiong/hjgheu5zg6epft7fpstoovfl/screenshot.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>输入网址后发生了什么？</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/07/16/vim-commands/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/07/15/http-protocol/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&text=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&is_video=false&description=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=输入网址后发生了什么？&body=Check out this article: r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&name=输入网址后发生了什么？&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&t=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-首先是输入网址"><span class="toc-number">1.</span> <span class="toc-text">1.首先是输入网址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-浏览器查找域名对应IP"><span class="toc-number">2.</span> <span class="toc-text">2.浏览器查找域名对应IP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-DNS查找过程"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 DNS查找过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-多IP域名DNS查询解决方案"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 多IP域名DNS查询解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-发送请求"><span class="toc-number">3.</span> <span class="toc-text">3.发送请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-重定向"><span class="toc-number">4.</span> <span class="toc-text">4.重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-新的请求"><span class="toc-number">5.</span> <span class="toc-text">5.新的请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6服务器处理请求"><span class="toc-number">6.</span> <span class="toc-text">6服务器处理请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-web服务器软件"><span class="toc-number">6.1.</span> <span class="toc-text">6.1  web服务器软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-处理流程"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 处理流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-服务器发回一个html响应"><span class="toc-number">7.</span> <span class="toc-text">7.服务器发回一个html响应</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-浏览器开始显示html"><span class="toc-number">8.</span> <span class="toc-text">8.浏览器开始显示html</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-浏览器获取其它文件"><span class="toc-number">9.</span> <span class="toc-text">9.浏览器获取其它文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-浏览器发送异步（AJAX）请求"><span class="toc-number">10.</span> <span class="toc-text">10.浏览器发送异步（AJAX）请求</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        输入网址后发生了什么？
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-07-15T04:01:44.000Z" itemprop="datePublished">2017-07-15</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="1-首先是输入网址"><a href="#1-首先是输入网址" class="headerlink" title="1.首先是输入网址"></a>1.首先是输入网址</h2><p>以<a href="http://www.google.com为例" target="_blank" rel="noopener">www.google.com为例</a></p>
+<hr>
+<h2 id="2-浏览器查找域名对应IP"><a href="#2-浏览器查找域名对应IP" class="headerlink" title="2.浏览器查找域名对应IP"></a>2.浏览器查找域名对应IP</h2><h3 id="2-1-DNS查找过程"><a href="#2-1-DNS查找过程" class="headerlink" title="2.1 DNS查找过程"></a>2.1 DNS查找过程</h3><ol>
+<li><strong>浏览器缓存</strong>——浏览器会记录DNS一段时间（2-30分钟不等，视浏览器而定）</li>
+<li><strong>系统缓存</strong>——浏览器里面没找到DNS缓存，此时浏览器做一个系统调用（Windows下是gethostbyname）。如发现匹配则采用。（与此对应有host恶意劫持更改攻击）</li>
+<li><strong>路由器缓存</strong>——路由器也会有DNS缓存（缓存你上过的网站，所以有时需要进行那个DNS刷新）</li>
+<li><strong>ISP DNS缓存</strong>——接下来是在ISP（互联网服务提供商）的DNS服务器的缓存上查找。</li>
+<li><strong>递归查找</strong>——DNS缓存里没有的话，ISP DNS服务器会先后从<strong>根域名服务器(root)</strong>、<strong>.com顶级域名服务器</strong>、Google域名服务器获取IP（一般缓存内都会有，所以这一步一般不会发生）<br><img src="http://static.zybuluo.com/boyongjiong/hjgheu5zg6epft7fpstoovfl/screenshot.png" alt="screenshot.png-40.2kB"></li>
+</ol>
+<h3 id="2-2-多IP域名DNS查询解决方案"><a href="#2-2-多IP域名DNS查询解决方案" class="headerlink" title="2.2 多IP域名DNS查询解决方案"></a>2.2 多IP域名DNS查询解决方案</h3><ol>
+<li>循环DNS——单个域名、多个IP列表循环应对DNS查询</li>
+<li>负载均衡器——一个特定的负载均衡服务器（例如：反向代理服务器）负责监听请求并转发给后面的多个服务器集群的某一个，实现多个服务器负载均衡</li>
+<li>地理DNS——根据用户所处地理位置，返回不同的IP（应用：CDN）</li>
+<li>anycast——一个IP地址映射多个物理主机的路由技术</li>
+</ol>
+<hr>
+<h2 id="3-发送请求"><a href="#3-发送请求" class="headerlink" title="3.发送请求"></a>3.发送请求</h2><p>得到域名对应IP后，就开始发送http(s)请求了。<br>请求头详解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET http:&#x2F;&#x2F;google.com&#x2F; HTTP 1.1</span><br><span class="line">Accept: application&#x2F;x-ms-application, image&#x2F;jpeg, application&#x2F;xaml+xml, [...]</span><br><span class="line">User-Agent: Mozilla&#x2F;4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; [...])</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Host: google.com</span><br><span class="line">Cookie: datr&#x3D;1265876274-[...]; locate&#x3D;en_US; lsd&#x3D;WW[...]; c_user&#x3D;2101[...]</span><br></pre></td></tr></table></figure>
+
+<p>请求告诉服务器：</p>
+<ol>
+<li>我要获取（GET）<a href="http://google.com/" target="_blank" rel="noopener">http://google.com/</a> (GET的URL)这个页面</li>
+<li>Accept：我能接受这些类型的文件</li>
+<li>我使用的是何种操作系统上的哪个类型哪个版本的浏览器</li>
+<li>承认接受何种方式的压缩文件</li>
+<li>连接类型：短连接？长连接？</li>
+<li>主机域名</li>
+<li>发送存储在本机的cookies信息给服务器</li>
+</ol>
+<p>除了<strong>发送获取请求</strong>，还能<strong>发送提交响应请求</strong>（如：搜索时要把搜索的内容一并发给服务器进行处理（在请求url后面增加特定的用户参数），以获取特定的内容）</p>
+<p>注意：<strong>url后面加斜杠与不加斜杠的区别</strong>（文件夹与单个文件的区别）<br><a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a><br><a href="http://www.google.com/" target="_blank" rel="noopener">http://www.google.com/</a></p>
+<p>当我们输入 <a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a> 时，浏览器会自动添加斜杠，保证URL的严谨<br>当我们输入：<a href="http://www.google.com/folderOrFile" target="_blank" rel="noopener">http://www.google.com/folderOrFile</a> 时，因为<strong>浏览器不清楚folderOrFile到底是文件还是文件夹</strong>，所以<strong>不能自动添加 斜杠</strong>。这时，浏览器就不加斜杠直接访问地址，服务器会<strong>响应一个重定向</strong>，结果造成一次<strong>不必要的握手</strong>。</p>
+<hr>
+<h2 id="4-重定向"><a href="#4-重定向" class="headerlink" title="4.重定向"></a>4.重定向</h2><p>当我们输入不完整的网址 (<a href="http://google.com" target="_blank" rel="noopener">http://google.com</a>) 时，或者网站迁移做了重定向设置时，服务器会进行一次重定向响应。<br>下面是重定向之后返回的响应头：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 301 Moved Permanently</span><br><span class="line">Cache-Control: private, no-store, no-cache, must-revalidate, post-check&#x3D;0, pre-check&#x3D;0</span><br><span class="line">Expires: Sat, 01 Jan 2000 00:00:00 GMT</span><br><span class="line">Location: http:&#x2F;&#x2F;www.google.com</span><br><span class="line">P3P: CP&#x3D;&quot;DSP LAW&quot;</span><br><span class="line">Pregma: no-cache</span><br><span class="line">Set-Cookie: made_write_conn&#x3D;deleted; expires&#x3D;Thu, 12-Fwb-2009 05:09:50 GMT; path&#x3D;&#x2F;; domain&#x3D;.google.com; httponly</span><br><span class="line">Content-Type: text&#x2F;html; charset&#x3D;utf-8</span><br><span class="line">X-Cnection: close</span><br><span class="line">Date: Fri, 12 Feb 2010 05:09:51 GMT</span><br><span class="line">Content-Length: 0</span><br></pre></td></tr></table></figure>
+<ol>
+<li>301永久重定向</li>
+<li>新的Location:……</li>
+</ol>
+<blockquote>
+<p>为什么要重定向，而不直接返回用户想看的内容？（既然服务器已经重定向知道了用户需要什么）<br>答：原因之一是与搜索引擎排名有关。比如，如果一个页面有两个地址，就像 <a href="http://www.igoro.com/" target="_blank" rel="noopener">http://www.igoro.com/</a> 和 <a href="http://igoro.com/" target="_blank" rel="noopener">http://igoro.com/</a> ，搜索引擎会认为它们是两个网站，结果造成每一个的搜索链接都减少从而降低排名。而搜索引擎知道301永久重定向是什么意思，这样就会把访问带www和不带www的地址归到同一个网站排名下。</p>
+</blockquote>
+<hr>
+<h2 id="5-新的请求"><a href="#5-新的请求" class="headerlink" title="5.新的请求"></a>5.新的请求</h2><p>重定向之后会发布一个新的获取请求</p>
+<hr>
+<h2 id="6服务器处理请求"><a href="#6服务器处理请求" class="headerlink" title="6服务器处理请求"></a>6服务器处理请求</h2><h3 id="6-1-web服务器软件"><a href="#6-1-web服务器软件" class="headerlink" title="6.1  web服务器软件"></a>6.1  web服务器软件</h3><blockquote>
+<ul>
+<li>服务器操作系统种类：Linux（一般是厂家根据开源定制）、windows server系列（微软）</li>
+<li>主要的服务器软件：IIS、Apache、Tomcat、JBOSS、Nginx、lighttpd、Tetty</li>
+<li>服务器软件的作用：接收、处理与相应请求（了解CGI的作用）</li>
+</ul>
+</blockquote>
+<h3 id="6-2-处理流程"><a href="#6-2-处理流程" class="headerlink" title="6.2 处理流程"></a>6.2 处理流程</h3><blockquote>
+<ol>
+<li>web服务器软件（如IIS或者Apache）接收到http请求</li>
+<li>确定执行那个<strong>请求处理程序</strong>（一个能读懂请求并且能生成html来进行响应的程序）（例如：Asp.Net,PHP,RUBY）来处理它</li>
+<li>请求处理器阅读请求头的参数cookies信息</li>
+<li>更新服务器上的信息：例如更新数据库信息、服务端cookies</li>
+<li>生成html，压缩（gzip或其它），响应请求发送给用户</li>
+</ol>
+</blockquote>
+<hr>
+<h2 id="7-服务器发回一个html响应"><a href="#7-服务器发回一个html响应" class="headerlink" title="7.服务器发回一个html响应"></a>7.服务器发回一个html响应</h2><p>响应包括响应头（响应参数与信息）、响应包（主体文件）</p>
+<p>响应包采用特定方法压缩，整个响应以blob类型传输，响应头只是响应包以何种方式压缩</p>
+<p>这个响应头与重定向的响应头不太一样，这个响应头还包含着缓存选项，cookies设置和隐私信息等</p>
+<hr>
+<h2 id="8-浏览器开始显示html"><a href="#8-浏览器开始显示html" class="headerlink" title="8.浏览器开始显示html"></a>8.浏览器开始显示html</h2><p>浏览器在没有完整接收全部html文件时就已经开始显示页面了</p>
+<hr>
+<h2 id="9-浏览器获取其它文件"><a href="#9-浏览器获取其它文件" class="headerlink" title="9.浏览器获取其它文件"></a>9.浏览器获取其它文件</h2><p>浏览器解析html遇到需要下载的文件时，便再次向服务器（CDN ）发送获取文件的请求。</p>
+<p>注意：</p>
+<ol>
+<li>动态页面无法缓存，静态文件允许浏览器进行缓存。</li>
+<li>静态文件本地有缓存时直接从本地读取</li>
+<li>请求响应头内包含着静态文件保存的期限，浏览器知道下载的静态文件要静默保留多久</li>
+<li>响应头还会有静态文件的ETag（相当于版本号），当浏览器发现请求的静态文件的响应头的ETag与现有的缓存文件不符时，变回再次向服务器获取静态文件。</li>
+</ol>
+<hr>
+<h2 id="10-浏览器发送异步（AJAX）请求"><a href="#10-浏览器发送异步（AJAX）请求" class="headerlink" title="10.浏览器发送异步（AJAX）请求"></a>10.浏览器发送异步（AJAX）请求</h2><ul>
+<li>WEB 2.0的一大特征就是页面显示完全后客户端仍旧与服务器端保持联系（keep-alive） </li>
+<li>浏览器执行特定的JS代码会给服务器发送异步请求，获取罪行的动态消息，使得页面能保持较新的状态。</li>
+<li>http是一个<strong>请求-响应协议</strong>，只有在客户端发送请求，服务器端才能做出响应，而不能主动把消息或者文档发给客户。所以，要想保持页面处于最新的状态，需要定时进行轮询(定时发送AJAX请求以更新页面内容)</li>
+<li>AJAX请求十分容易更改，且用户十分容易自己制造和发送AJAX请求，所以没有验证码的没有IP限制条件的投票就是一个小游戏了。</li>
+<li>优化小方案：如果服务器被轮询时没有新消息，它就不理这个客户端。而当请求尚未超时的情况下如果手法哦了该客户的性消息，服务器就找到未完成的请求，把新消息作为响应发送给客户端（这样就无需频繁地响应请求了）</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-首先是输入网址"><span class="toc-number">1.</span> <span class="toc-text">1.首先是输入网址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-浏览器查找域名对应IP"><span class="toc-number">2.</span> <span class="toc-text">2.浏览器查找域名对应IP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-DNS查找过程"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 DNS查找过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-多IP域名DNS查询解决方案"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 多IP域名DNS查询解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-发送请求"><span class="toc-number">3.</span> <span class="toc-text">3.发送请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-重定向"><span class="toc-number">4.</span> <span class="toc-text">4.重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-新的请求"><span class="toc-number">5.</span> <span class="toc-text">5.新的请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6服务器处理请求"><span class="toc-number">6.</span> <span class="toc-text">6服务器处理请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-web服务器软件"><span class="toc-number">6.1.</span> <span class="toc-text">6.1  web服务器软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-处理流程"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 处理流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-服务器发回一个html响应"><span class="toc-number">7.</span> <span class="toc-text">7.服务器发回一个html响应</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-浏览器开始显示html"><span class="toc-number">8.</span> <span class="toc-text">8.浏览器开始显示html</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-浏览器获取其它文件"><span class="toc-number">9.</span> <span class="toc-text">9.浏览器获取其它文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-浏览器发送异步（AJAX）请求"><span class="toc-number">10.</span> <span class="toc-text">10.浏览器发送异步（AJAX）请求</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&text=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&is_video=false&description=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=输入网址后发生了什么？&body=Check out this article: r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&title=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&name=输入网址后发生了什么？&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2017/07/15/what-happened-when-visit-a-website/&t=输入网址后发生了什么？" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1. Install the CodePush CLI1npm install -g code-push-cli Note: On Mac OS and Linux, you may need to prefix this command with sudo 2. Create a CodePush accountBefore you can release any updates, you fi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native App Code-Push实践">
+<meta property="og:url" content="r0ger1tlearn.com/2018/01/20/rn-codepush-practice/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="1. Install the CodePush CLI1npm install -g code-push-cli Note: On Mac OS and Linux, you may need to prefix this command with sudo 2. Create a CodePush accountBefore you can release any updates, you fi">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/a9034e0egy1gjvmn2cfhaj21yc086tal.jpg">
+<meta property="og:image" content="https://tva2.sinaimg.cn/large/a9034e0egy1gjvmn287g1j20d105gwex.jpg">
+<meta property="og:image" content="https://tvax1.sinaimg.cn/large/a9034e0egy1gjvmnyj6hdj21c60jegps.jpg">
+<meta property="og:image" content="https://tvax3.sinaimg.cn/large/a9034e0egy1gjvmp3mgqxj21z40dutcz.jpg">
+<meta property="og:image" content="https://tva3.sinaimg.cn/large/a9034e0egy1gjvmrgpx8sj21t20eejwo.jpg">
+<meta property="og:image" content="https://tvax1.sinaimg.cn/large/a9034e0egy1gjvmrgdxbij219u0vytey.jpg">
+<meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvmrgyrqej219s0vw7av.jpg">
+<meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvmz8klc1j21oq0acwgu.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/a9034e0egy1gjvn0zjvhfj215q0ymwik.jpg">
+<meta property="og:image" content="https://tvax2.sinaimg.cn/large/a9034e0egy1gjvn1h2j43j215q0yogse.jpg">
+<meta property="og:image" content="https://tvax1.sinaimg.cn/large/a9034e0egy1gjvn1x2793j215u0ymqbv.jpg">
+<meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvn2ug9xrj20nu0g5dkf.jpg">
+<meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvn2uab5qj20o90jlgp6.jpg">
+<meta property="og:image" content="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvn5ejzg2j21z403qmyd.jpg">
+<meta property="article:published_time" content="2018-01-20T02:11:50.000Z">
+<meta property="article:modified_time" content="2023-06-29T13:27:54.461Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/a9034e0egy1gjvmn2cfhaj21yc086tal.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>React Native App Code-Push实践</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/03/26/an-interesting-interview-question/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/19/asynchronous-programming/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&text=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&is_video=false&description=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=React Native App Code-Push实践&body=Check out this article: r0ger1tlearn.com/2018/01/20/rn-codepush-practice/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&name=React Native App Code-Push实践&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&t=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Install-the-CodePush-CLI"><span class="toc-number">1.</span> <span class="toc-text">1. Install the CodePush CLI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Create-a-CodePush-account"><span class="toc-number">2.</span> <span class="toc-text">2. Create a CodePush account</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Register-your-app-with-the-service"><span class="toc-number">3.</span> <span class="toc-text">3. Register your app with the service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-CodePush-ify-your-app"><span class="toc-number">4.</span> <span class="toc-text">4. CodePush-ify your app</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Getting-Started"><span class="toc-number">4.1.</span> <span class="toc-text">Getting Started</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IOS-Setup"><span class="toc-number">4.2.</span> <span class="toc-text">IOS Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Plugin-Configuration-ios"><span class="toc-number">4.2.1.</span> <span class="toc-text">Plugin Configuration(ios)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于-deployment-key-的设置"><span class="toc-number">4.2.2.</span> <span class="toc-text">关于 deployment-key 的设置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Setup"><span class="toc-number">4.3.</span> <span class="toc-text">Android Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Plugin-Installation-Android"><span class="toc-number">4.3.1.</span> <span class="toc-text">Plugin Installation(Android)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Plugin-Configuration-Android"><span class="toc-number">4.3.2.</span> <span class="toc-text">Plugin Configuration(Android)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于-deployment-key-的设置-1"><span class="toc-number">4.3.3.</span> <span class="toc-text">关于 deployment-key 的设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Release-an-app-update"><span class="toc-number">5.</span> <span class="toc-text">5. Release an app update</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Run-your-app"><span class="toc-number">6.</span> <span class="toc-text">Run your app</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        React Native App Code-Push实践
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-01-20T02:11:50.000Z" itemprop="datePublished">2018-01-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%AE%9E%E8%B7%B5%E5%90%91/">实践向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="1-Install-the-CodePush-CLI"><a href="#1-Install-the-CodePush-CLI" class="headerlink" title="1. Install the CodePush CLI"></a>1. Install the CodePush CLI</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g code-push-cli</span><br></pre></td></tr></table></figure>
+<p>Note: On Mac OS and Linux, you <strong>may</strong> need to prefix this command with <strong>sudo</strong></p>
+<h2 id="2-Create-a-CodePush-account"><a href="#2-Create-a-CodePush-account" class="headerlink" title="2. Create a CodePush account"></a>2. Create a CodePush account</h2><p>Before you can release any updates, you first need to create a CodePush account. To do this, simply type the following command via the CLI and authenticate with either your GitHub or Microsoft account:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code-push register</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/a9034e0egy1gjvmn2cfhaj21yc086tal.jpg" alt="B1936EFD-EC60-473E-8857-7642F6EEC3FC"><br>eg:<br><img src="https://tva2.sinaimg.cn/large/a9034e0egy1gjvmn287g1j20d105gwex.jpg" alt="55B62D1C-B1E3-4936-8873-63444B8FDAA2"></p>
+<hr>
+<p>相关可用的命令</p>
+<ul>
+<li><code>npm install -g code-push-cli</code>  安装</li>
+<li><code>code-push register</code>  注册</li>
+<li><code>code-push login</code>  登录</li>
+<li><code>code-push logout</code>  注销    </li>
+<li><code>code-push access-key ls</code>  列出登录的 token</li>
+<li><code>code-push access-key rm &lt;accessKey&gt;</code>  删除某个 token</li>
+</ul>
+<hr>
+<h2 id="3-Register-your-app-with-the-service"><a href="#3-Register-your-app-with-the-service" class="headerlink" title="3. Register your app with the service"></a>3. Register your app with the service</h2><p>In order to let the service know about your app, simply register it using a recognizable name. Create an app for each OS you target:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">code-push app add MyApp-IOS ios react-native</span><br><span class="line"></span><br><span class="line">code-push app add MyApp-Android  android react-native</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tvax1.sinaimg.cn/large/a9034e0egy1gjvmnyj6hdj21c60jegps.jpg" alt="2E22E3CE-3B0F-48DD-9043-EC706E2A04E1"></p>
+<p><strong>JiqirenApp-IOS</strong>:<br> Production: <code>NXMw9_pCK6l40N12ipIy2ZZ3qf6_dc56ecd6-49b8-414b-bdd1-dc122f99eba6_</code><br> Staging: <code>y5XDr08m8PXr7e5J0rc5AXoIBfT-dc56ecd6-49b8-414b-bdd1-dc122f99eba6</code></p>
+<p><strong>JiqirenApp-Android</strong>:<br> Production: <code>n6XjjNKJ0mSXrUAQ4tAVeMNz9BUcdc56ecd6-49b8-414b-bdd1-dc122f99eba6</code><br> Staging: <code>kqIcG8s8bwTNjrdf6ajbXOefcU2Vdc56ecd6-49b8-414b-bdd1-dc122f99eba6</code></p>
+<hr>
+<p>相关可用的命令</p>
+<ul>
+<li><code>code-push app add &lt;AppName&gt;</code> 添加项目</li>
+<li><code>code-push app remove &lt;AppName&gt;</code> 删除项目</li>
+<li><code>code-push app list</code> 列出账号下所有项目</li>
+<li><code>code-push collaborator add &lt;AppName&gt; next@126.com</code></li>
+</ul>
+<hr>
+<h2 id="4-CodePush-ify-your-app"><a href="#4-CodePush-ify-your-app" class="headerlink" title="4. CodePush-ify your app"></a>4. CodePush-ify your app</h2><p>Add the appropriate CodePush client SDKs to your app, and configure them to query for updates against the app deployment created above. The following provide details on how to do this for each unique app type:</p>
+<p><a href="https://microsoft.github.io/code-push/docs/cordova.html#link-2" target="_blank" rel="noopener">Cordova</a><br><a href="https://microsoft.github.io/code-push/docs/react-native.html#link-3" target="_blank" rel="noopener">React-Native(ios)</a></p>
+<h3 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add react-native-code-push</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tvax3.sinaimg.cn/large/a9034e0egy1gjvmp3mgqxj21z40dutcz.jpg" alt="3C193AD9-FD38-4D8A-9DF1-64E2DAED1BAA"><br><strong>NOTE</strong>: This guide assumes you have used the <code>react-native init</code>command to initialize your React Native project. As of March 2017, the command <code>create-react-native-app</code> can also be used to initialize a React Native project. If using this command, please run <code>npm run eject</code> in your project’s home directory to get a project very similar to what <code>react-native init</code> would have created.</p>
+<h3 id="IOS-Setup"><a href="#IOS-Setup" class="headerlink" title="IOS Setup"></a>IOS Setup</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">react-native link</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva3.sinaimg.cn/large/a9034e0egy1gjvmrgpx8sj21t20eejwo.jpg" alt="5F9A9550-2C86-49DA-9D1C-26FB2C71701D"><br><strong>before:</strong><br><img src="https://tvax1.sinaimg.cn/large/a9034e0egy1gjvmrgdxbij219u0vytey.jpg" alt="3C2E4875-99BF-44D5-A254-80D272A05626"><br><strong>After:</strong><br><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvmrgyrqej219s0vw7av.jpg" alt="D5D705CC-AFD2-4618-925A-48868F1A54EF"></p>
+<p><strong>Note:</strong> - boyongjiong  2018/1/20</p>
+<blockquote>
+<p>千万要注意react-native link 之后，最好是去对照着插件提供的 PLUGIN INSTALLATION (IOS - MANUAL) 对照一遍，不知道在什么情况下就会出现错误， 上面这块儿是 Plugin Configuration（ios）的过程，理论上<code>react-native link</code>之后这些操作都不需要再管了，但是我们项目里面 link 就是出错，他在修改代码的时候处理好像有点问题，直接找相关代码，不确定是否已经被注释</p>
+</blockquote>
+<h4 id="Plugin-Configuration-ios"><a href="#Plugin-Configuration-ios" class="headerlink" title="Plugin Configuration(ios)"></a>Plugin Configuration(ios)</h4><p><strong>Note:</strong> If you used RNPM or react-native link to automatically link the plugin, these steps have already been done for you so you may skip this section.</p>
+<p>Once your Xcode project has been setup to build/link the CodePush plugin, you need to configure your app to consult CodePush for the location of your JS bundle, since it is responsible for synchronizing it with updates that are are released to the CodePush server.<br>To do this, perform the follow steps:</p>
+<ol>
+<li>Open up the <code>AppDelegate.m</code> file, and add an import statement for the CodePush headers:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;CodePush&#x2F;CodePush.h&gt;</span><br></pre></td></tr></table></figure></li>
+<li>Find the following line of code, which loads your JS Bundle from the app binary for production releases:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsCodeLocation &#x3D; [[NSBundle mainBundle] URLForResource:@&quot;main&quot; withExtension:@&quot;jsbundle&quot;];</span><br></pre></td></tr></table></figure></li>
+<li>Replace it with this line:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsCodeLocation &#x3D; [CodePush bundleURL];</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>This change configures your app to always load the most recent version of your app’s JS bundle. On the first launch, this will correspond to the file that was compiled with the app. However, after an update has been pushed via CodePush, this will return the location of the most recently installed update.</p>
+<p><strong>NOTE:</strong> The <code>bundleURL</code> method assumes your app’s JS bundle is named <code>main.jsbundle</code>. If you have configured your app to use a different fie name, simply call the <code>bundleURLForResource:</code> method(which assumes you’re using the <code>.jsbundle</code> extension) or <code>bundleURLForResource:withExtension:</code>method instead, in order to overwrite that default behavior.</p>
+<p>Typically, you’re only going to want to use CodePush to resolve your JS bundle location within release builds, and therefore, we recommend using the DEBUG pre-processor macro to dynamically switch between using the packager server and CodePush, depending on whether you are debugging or not. This will make it much simpler to ensure you get the right behavior you want in production, while still being able to use the Chrome Dev Tolls, live reload, etc. at debug-time</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NSURL *jsCodeLocation;</span><br><span class="line"></span><br><span class="line">#ifdef DEBUG</span><br><span class="line">    jsCodeLocation &#x3D; [NSURL URLWithString:@&quot;http:&#x2F;&#x2F;localhost:8081&#x2F;index.ios.bundle?platform&#x3D;ios&amp;dev&#x3D;true&quot;];</span><br><span class="line">#else</span><br><span class="line">    jsCodeLocation &#x3D; [CodePush bundleURL];</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p>To let the CodePush runtime know which deployment it should query for updates against, open your app’s <strong>Info.plist</strong> file and add a new entry named CodePushDeploymentKey, whose value is the key of the deployment you want to configure this app against(e.g. the key for the Staging deployment for the FooBar app). You can retrieve this value by running </p>
+<p><strong><code>code-push deployment ls &lt;AppName&gt; -k</code></strong></p>
+<p><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvmz8klc1j21oq0acwgu.jpg" alt="D01456B2-030F-4A1B-B590-B17FA4FAC5C3"><br>in the CodePush CLI(the -k flag is necessary since keys aren’t displayed by default) and copying the value of the <code>Deployment Key</code> column which corresponds to the deployment you want to use(see below). Note that using the deployment’s name(e.g. Staging) will not work. That ‘friendly name’ is intended only for authenticated management usage from the CLI, and not for public consumption within your app.</p>
+<h4 id="关于-deployment-key-的设置"><a href="#关于-deployment-key-的设置" class="headerlink" title="关于 deployment-key 的设置"></a>关于 deployment-key 的设置</h4><p>在我们想 CodePush 注册 App 的时候，CodePush 会给我们两个 deployment-key 分别是在生产环境与测试环境时使用的，我们可以通过如下步骤来设置 deployment-key。<br>1.用Xcode 打开项目 ➜ Xcode的项目导航视图中的PROJECT下选择你的项目 ➜ 选择Info页签 ➜ 在Configurations节点下单击 + 按钮 ➜ 选择Duplicate “Release ➜ 输入Staging(名称可以自定义)；<br><img src="https://tva1.sinaimg.cn/large/a9034e0egy1gjvn0zjvhfj215q0ymwik.jpg" alt="C4C2FB0C-EFEB-47CF-B62A-13FB27749761"><br>2.然后选择Build Settings页签 ➜ 单击 + 按钮然后选择添加User-Defined Setting<br>3.然后输入CODEPUSH_KEY(名称可以自定义)<br><img src="https://tvax2.sinaimg.cn/large/a9034e0egy1gjvn1h2j43j215q0yogse.jpg" alt="4B65DCF6-A5A3-4597-BE32-ECDD6F3F074B"><br>4.打开 Info.plist文件，在CodePushDeploymentKey列的Value中输入$(CODEPUSH_KEY)<br><img src="https://tvax1.sinaimg.cn/large/a9034e0egy1gjvn1x2793j215u0ymqbv.jpg" alt="BD133722-D5E6-4BD9-9005-A9F7FCA93E0E"></p>
+<h3 id="Android-Setup"><a href="#Android-Setup" class="headerlink" title="Android Setup"></a>Android Setup</h3><p>In order to integrate CodePush into your Android project, perform the following steps:</p>
+<h4 id="Plugin-Installation-Android"><a href="#Plugin-Installation-Android" class="headerlink" title="Plugin Installation(Android)"></a>Plugin Installation(Android)</h4><p>In order to accommodate as many developer preferences as possible, the CodePush plugin supports Android installation via two mechanisms:</p>
+<ol>
+<li><code>RNPM - React Native Package Manager (RNPM)</code> is an awesome tool that provides the simplest installation experience possible for React Native plugins. If you’re already using it, or you want to use it, then we recommend this approach.</li>
+<li><code>Manual</code>If you don’t want to depend on any additional tools or are fine with a few extra installation steps (it’s a one-time thing), then go with this approach.</li>
+</ol>
+<p><strong>Note:</strong> Due to a code change from the React Native repository</p>
+<p><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvn2ug9xrj20nu0g5dkf.jpg" alt="4FFAD87E-B3A4-4DA3-971D-3BA90F7FA1CC"><br><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvn2uab5qj20o90jlgp6.jpg" alt="1C2031FF-D408-4D64-AC84-81A6A8E88423"></p>
+<h4 id="Plugin-Configuration-Android"><a href="#Plugin-Configuration-Android" class="headerlink" title="Plugin Configuration(Android)"></a>Plugin Configuration(Android)</h4><p><strong>Note:</strong>If you used  RNPM or <code>react-native link</code> to automatically link the plugin, these steps have been done for you so you may skip this section. （但是还是做一下检查，以及跟着配置一下，因为在 link 的时候，他要求填 deployment key 的时候，我们只输入一个 Staging 的，或者不输入，还得之后再进行具体的配置）</p>
+<p>After installing the plugin adn syncing your Android Studio with Gradle, you need to configure your app to consult CodePush for the location of your JS bundle, since it will “take control” of managing the current and all future versions. To do this:</p>
+<p><strong>For React Native &gt;= v0.29</strong><br>Update the <code>MainApplication.java</code> file to use CodePush via the following changes:</p>
+<p><strong>旧版本</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class MainApplication extends Application implements ReactApplication &#123;</span><br><span class="line">  private final ReactNativeHost mReactNativeHost &#x3D; new ReactNativeHost(this) &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected boolean getUseDeveloperSupport() &#123;</span><br><span class="line">      return BuildConfig.DEBUG;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    protected String getJSBundleFile() &#123;</span><br><span class="line">      return CodePush.getJSBundleFile();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    protected List&lt;ReactPackage&gt; getPackages() &#123;</span><br><span class="line">      &#x2F;&#x2F; 3. Instantiate an instance of the CodePush runtime and add it to the list of</span><br><span class="line">      &#x2F;&#x2F; existing packages, specifying the right deployment key. If you don&#39;t already</span><br><span class="line">      &#x2F;&#x2F; have it, you can run &quot;code-push deployment ls &lt;appName&gt; -k&quot; to retrieve your key.</span><br><span class="line">      return Arrays.&lt;ReactPackage&gt;asList(</span><br><span class="line">        new MainReactPackage(),</span><br><span class="line">        new CodePush(&quot;deployment-key-here&quot;, MainApplication.this, BuildConfig.DEBUG)</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  @Override</span><br><span class="line">  public ReactNativeHost getReactNativeHost() &#123;</span><br><span class="line">      return mReactNativeHost;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>新版本</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">public class MainApplication extends NavigationApplication &#123;</span><br><span class="line">  protected List&lt;ReactPackage&gt; getPackages() &#123;</span><br><span class="line">    return Arrays.&lt;ReactPackage&gt;asList(</span><br><span class="line">      new MainReactPackage(),</span><br><span class="line">      new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),</span><br><span class="line">      new ReactVideoPackage(),</span><br><span class="line">      new SpeechPackage(),</span><br><span class="line">      new DplusReactPackage(),</span><br><span class="line">      new RCTPdfView(),</span><br><span class="line">      new RNFetchBlobPackage(),</span><br><span class="line">      new PickerViewPackage(),</span><br><span class="line">      new RCTToastPackage(),</span><br><span class="line">      new RNSpinkitPackage(),</span><br><span class="line">      new ReactNativeConfigPackage(),</span><br><span class="line">      new VectorIconsPackage()</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public String getJSMainModuleName() &#123;</span><br><span class="line">    return &quot;index&quot;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public boolean isDebug() &#123;</span><br><span class="line">    return BuildConfig.DEBUG;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Nullable</span><br><span class="line">  @Override</span><br><span class="line">  public List&lt;ReactPackage&gt; createAdditionalReactPackages() &#123;</span><br><span class="line">    return getPackages();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void onCreate() &#123;</span><br><span class="line">    super.onCreate();</span><br><span class="line">    SoLoader.init(this, &#x2F;* native exopackage *&#x2F; false);</span><br><span class="line">    RNUMConfigure.init(this, &quot;5a484223f43e48271100002f&quot;, &quot;Umeng&quot;, UMConfigure.DEVICE_TYPE_PHONE,</span><br><span class="line">            &quot;669c30a9584623e70e8cd01b0381dcb4&quot;);</span><br><span class="line">    MobclickAgent.setSessionContinueMillis(1000);</span><br><span class="line">    MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_DUM_NORMAL);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关于-deployment-key-的设置-1"><a href="#关于-deployment-key-的设置-1" class="headerlink" title="关于 deployment-key 的设置"></a>关于 deployment-key 的设置</h4><p>在上述代码中我们在创建 CodePush 实例的时候需要设置一个 deployment-key分生产环境与测试环境两种，所以建议大家在 build.gradle 中进行设置。在 build.gradle 中的设置方法如下：</p>
+<p>打开 android/app/build.gradle 文件，找到 android { buildTypes {} } 然后添加如下代码即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">  ...</span><br><span class="line">  buildTypes &#123;</span><br><span class="line">    debug &#123;</span><br><span class="line">      ...</span><br><span class="line">      &#x2F;&#x2F; CodePush updates should not be tested in Debug mode</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    releaseStaging &#123;</span><br><span class="line">      ...</span><br><span class="line">      buildConfigField &quot;String&quot;, &quot;CODEPUSH_KEY&quot;, &#39;&quot;&lt;INSERT_STAGING_KEY&gt;&quot;&#39;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    release &#123;</span><br><span class="line">      ...</span><br><span class="line">      buildConfigField &quot;String&quot;, &quot;CODEPUSH_KEY&quot;, &#39;&quot;&lt;INSERT_PRODUCTION_KEY&gt;&quot;&#39;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>心得：另外，我们也可以将 deployment-key 存放在 local.properties 中：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">code_push_key_production&#x3D;erASzHa1-wTdODdPJDh6DBF2Jwo94JFH08Kvb</span><br><span class="line">code_push_key_staging&#x3D;mQY75RkFbX6SiZU1kVT1II7OqWst4JFH08Kvb</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以再 android/app/build.gradle 可以通过下面方式来引用它了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Propertire properties &#x3D; new Properties()</span><br><span class="line">properties.load(project.rootProject.file(&#39;local.properties&#39;).newDataInputStream())</span><br><span class="line">android &#123;</span><br><span class="line">  ...</span><br><span class="line">  buildTypes &#123;</span><br><span class="line">    debug &#123;</span><br><span class="line">      ...</span><br><span class="line">      &#x2F;&#x2F; CodePush updates should not be tested in Debug mode</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    releaseStaging &#123;</span><br><span class="line">      ...</span><br><span class="line">      buildConfigField &quot;String&quot;, &quot;CODEPUSH_KEY&quot;, &#39;&quot;&#39;+properties.getProperty(&quot;code_push_key_staging&quot;)+&#39;&quot;&#39;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    release &#123;</span><br><span class="line">      ...</span><br><span class="line">      buildConfigField &quot;String&quot;, &quot;CODEPUSH_KEY&quot;, &#39;&quot;&#39;+properties.getProperty(&quot;code_push_key_production&quot;)+&#39;&quot;&#39;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 android/app/build.gradle 设置好 deployment-key 之后呢，我们就可以这样使用了:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected List&lt;ReactPackage&gt; getPackages() &#123;</span><br><span class="line">  return Arrays.&lt;ReactPackage&gt;asList(</span><br><span class="line">    ...</span><br><span class="line">    new CodePush(BuildConfig.CODEPUSH_KEY, MainApplication.this, BuildConfig.DEBUG), &#x2F;&#x2F; Add change this line</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后修改 versionName。<br>在 android/app/build.gradle 中有个 android.defaultConfig.versionName属性，我们需要把应用版本改成 1.0.0 (默认是1.0，但 CodePush 需要三位数)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">adnroid &#123;</span><br><span class="line">  defaultConfig&#123;</span><br><span class="line">    versionName &quot;1.0&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="5-Release-an-app-update"><a href="#5-Release-an-app-update" class="headerlink" title="5. Release an app update"></a>5. Release an app update</h2><p>After making changes to your app’s code or assets, push the update to your staging environment by using the CLI command which corresponds to the app type you are building (React Native or Cordova), and specifies the name of your CodePush app and the platform that your update is targetting (iOS or Android).</p>
+<p><strong>React Native</strong><br>Run the <code>release-react</code> command in the CodePush CLI, which will handle bundling your JavaScript and asset files and releasing the update to the CodePush server.</p>
+<p>For example: <code>code-push release-react MyApp-iOS ios</code></p>
+<p><img src="https://tvax4.sinaimg.cn/large/a9034e0egy1gjvn5ejzg2j21z403qmyd.jpg" alt="554BD5D6-AA50-4C62-A131-F24735562D48"></p>
+<p><strong>Android</strong>:</p>
+<ul>
+<li>bundle: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">react-native bundle --platform ios --entry-file index.js --bundle-output .&#x2F;bundles&#x2F;main.jsbundle --dev false</span><br><span class="line"></span><br><span class="line">code-push release JiqirenApp-IOS .&#x2F;bundles&#x2F;index.ios.bundle 1.0.0 --deploymentName Staging --description &quot;要想生活过得去，头上必须带点绿&quot; --mandatory true</span><br></pre></td></tr></table></figure></li>
+<li>release:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 注意打包的时候要包括上 assets 资源</span><br><span class="line">react-native bundle --platform android --entry-file index.js --bundle-output .&#x2F;bundles&#x2F;index.android.bundle --dev false</span><br><span class="line"></span><br><span class="line">code-push release JiqirenApp-Android .&#x2F;bundles&#x2F;index.android.bundle 1.0.0 --deploymentName Staging --description &quot;要想生活过得去，头上必须带点绿&quot; --mandatory true</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>iOS</strong>:</p>
+<p><strong>Cordova</strong>:<br>Run the <code>release-cordova</code> command in the CodePush CLI, which will handle bundling your JavaScript and asset files and releasing the update to the CodePush server.</p>
+<p>For example: <code>code-push release-cordova MyApp-Android android</code></p>
+<hr>
+<h2 id="Run-your-app"><a href="#Run-your-app" class="headerlink" title="Run your app"></a>Run your app</h2><p>And that’s it! All users running your app will receive the update using the experience you configured in step #4. For more details, refer to the CLI and client SDK documentation (Cordova, React Native).</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Install-the-CodePush-CLI"><span class="toc-number">1.</span> <span class="toc-text">1. Install the CodePush CLI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Create-a-CodePush-account"><span class="toc-number">2.</span> <span class="toc-text">2. Create a CodePush account</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Register-your-app-with-the-service"><span class="toc-number">3.</span> <span class="toc-text">3. Register your app with the service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-CodePush-ify-your-app"><span class="toc-number">4.</span> <span class="toc-text">4. CodePush-ify your app</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Getting-Started"><span class="toc-number">4.1.</span> <span class="toc-text">Getting Started</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IOS-Setup"><span class="toc-number">4.2.</span> <span class="toc-text">IOS Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Plugin-Configuration-ios"><span class="toc-number">4.2.1.</span> <span class="toc-text">Plugin Configuration(ios)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于-deployment-key-的设置"><span class="toc-number">4.2.2.</span> <span class="toc-text">关于 deployment-key 的设置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Setup"><span class="toc-number">4.3.</span> <span class="toc-text">Android Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Plugin-Installation-Android"><span class="toc-number">4.3.1.</span> <span class="toc-text">Plugin Installation(Android)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Plugin-Configuration-Android"><span class="toc-number">4.3.2.</span> <span class="toc-text">Plugin Configuration(Android)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于-deployment-key-的设置-1"><span class="toc-number">4.3.3.</span> <span class="toc-text">关于 deployment-key 的设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Release-an-app-update"><span class="toc-number">5.</span> <span class="toc-text">5. Release an app update</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Run-your-app"><span class="toc-number">6.</span> <span class="toc-text">Run your app</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&text=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&is_video=false&description=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=React Native App Code-Push实践&body=Check out this article: r0ger1tlearn.com/2018/01/20/rn-codepush-practice/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&title=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&name=React Native App Code-Push实践&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2018/01/20/rn-codepush-practice/&t=React Native App Code-Push实践" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

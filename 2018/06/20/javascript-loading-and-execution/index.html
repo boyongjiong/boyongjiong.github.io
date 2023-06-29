@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="首先我想说一下 JavaScript 的装载和执行。通常来说，浏览器对于 JavaScript 的运行有两大特性： 1. 载入后马上执行 2. 执行时会阻塞后续的内容（包括页面的渲染、其它资源的下载）于是，如果有多个 js 文件被引入，那么对于浏览器来说，这些 js 文件被串行的载入，并依次执行。 因为 JavaScript 可能会来操作HTML 文档的 DOM 树，所以，浏览器一般都不会像并行下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 装载和执行">
+<meta property="og:url" content="r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/index.html">
+<meta property="og:site_name" content="Echoes Of The Rainbow">
+<meta property="og:description" content="首先我想说一下 JavaScript 的装载和执行。通常来说，浏览器对于 JavaScript 的运行有两大特性： 1. 载入后马上执行 2. 执行时会阻塞后续的内容（包括页面的渲染、其它资源的下载）于是，如果有多个 js 文件被引入，那么对于浏览器来说，这些 js 文件被串行的载入，并依次执行。 因为 JavaScript 可能会来操作HTML 文档的 DOM 树，所以，浏览器一般都不会像并行下">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-06-20T05:51:26.000Z">
+<meta property="article:modified_time" content="2023-06-29T12:22:18.844Z">
+<meta property="article:author" content="boyongjiong">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content=" React">
+<meta property="article:tag" content=" Node.js">
+<meta property="article:tag" content=" GraphQL">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>JavaScript 装载和执行</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/08/31/layout-with-viewport/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/20/https/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&text=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&is_video=false&description=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=JavaScript 装载和执行&body=Check out this article: r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&name=JavaScript 装载和执行&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&t=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#传统的方式"><span class="toc-number">1.</span> <span class="toc-text">传统的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#document-write方式"><span class="toc-number">2.</span> <span class="toc-text">document.write方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#script-的-defer-和-async-属性"><span class="toc-number">3.</span> <span class="toc-text">script 的 defer 和 async 属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态创建-DOM-方式"><span class="toc-number">4.</span> <span class="toc-text">动态创建 DOM 方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按需异步载入-js"><span class="toc-number">5.</span> <span class="toc-text">按需异步载入 js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多"><span class="toc-number">6.</span> <span class="toc-text">更多</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        JavaScript 装载和执行
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Echoes Of The Rainbow</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-06-20T05:51:26.000Z" itemprop="datePublished">2018-06-20</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>首先我想说一下 JavaScript 的装载和执行。通常来说，浏览器对于 JavaScript 的运行有两大特性：</p>
+<pre><code>1. 载入后马上执行
+2. 执行时会阻塞后续的内容（包括页面的渲染、其它资源的下载）</code></pre><p>于是，如果有多个 js 文件被引入，那么对于浏览器来说，这些 js 文件被串行的载入，并依次执行。</p>
+<p>因为 JavaScript 可能会来操作HTML 文档的 DOM 树，所以，浏览器一般都不会像并行下载 css 文件并行下载 js 文件，因为这是 js 文件的特殊性造成的。所以，如果你的 JavaScript 想操作后面的 DOM 元素，基本上来说，浏览器都会报错说对象找不到。因为 JavaScript 执行时，后面的 HTML 被阻塞住了，DOM 树里还没有后面的 DOM 节点。所以程序也就报错了。</p>
+<h2 id="传统的方式"><a href="#传统的方式" class="headerlink" title="传统的方式"></a>传统的方式</h2><p>所以，当你在代码中写下如下的代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"https://coolshell.cn/asyncjs/alert.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>基本上来说，head 里的 <em>script</em> 标签会阻塞后续资源的载入以及整个页面的生成——<a href="https://coolshell.cn/asyncjs/async_test01.html" target="_blank" rel="noopener">实例一</a>。注意：我的 alert.js 中只有一句话 alert(‘hello world’)，这更容易让你看到 JavaScript 是怎么阻塞后面的东西的。</p>
+<p>所以你知道为什么很多网站把 JavaScript 放在网页的最后面了，要么就是动用了 window.onload 或是 document.ready 之类的事件。</p>
+<p>另外，因为绝大多数的 JavaScript 代码并不需要等页面，所以我们需要异步载入的功能。那么我们怎么异步载入呢？</p>
+<h2 id="document-write方式"><a href="#document-write方式" class="headerlink" title="document.write方式"></a>document.write方式</h2><p>于是你可能以为 document.write()这种方式能够解决不阻塞的方式。你当然会觉得，document.write 了 <em>script</em> 标签后就可以执行后面的东西去了，这没错。对于同一个 script 标签里的 JavaScript 代码来说，是这样的，但是对于整个页面来说，这个还是会阻塞。下面是一段测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot; language&#x3D;&quot;javascript&quot;&gt;</span><br><span class="line">  function loadjs(script_filename) &#123;</span><br><span class="line">    document.write(&#39;&lt;&#39; + &#39;script language&#x3D;&quot;javascript&quot; type&#x3D;&quot;text&#x2F;javascript&quot;&#39;);</span><br><span class="line">    document.write(&#39; src&#x3D;&quot;&#39; + script_filename + &#39;&quot;&gt;&#39;);</span><br><span class="line">    document.write(&#39;&lt;&#39;+&#39;&#x2F;script&#39;+&#39;&gt;&#39;);</span><br><span class="line">    alert(&quot;loadjs() exit...&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  var script &#x3D; &#39;https:&#x2F;&#x2F;coolshell.cn&#x2F;asyncjs&#x2F;alert.js&#39;;</span><br><span class="line">  loadjs(script);</span><br><span class="line">  alert(&quot;loadjs() finished!&quot;);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot; language&#x3D;&quot;javascript&quot;&gt;</span><br><span class="line">  alert(&quot;another block&quot;);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>你觉得 alert 的顺序是什么？你可以在不同的浏览器中试一试。这是相关测试页面——<a href="https://coolshell.cn/asyncjs/async_test02.html" target="_blank" rel="noopener">实例二</a></p>
+<h2 id="script-的-defer-和-async-属性"><a href="#script-的-defer-和-async-属性" class="headerlink" title="script 的 defer 和 async 属性"></a>script 的 defer 和 async 属性</h2><p>IE 自从 IE6就支持 defer 标签，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script defer type&#x3D;&quot;text&#x2F;javascript&quot; src&#x3D;&quot;.&#x2F;alert.js&quot;&gt;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>对于IE 来说，这个标签会让 IE 并行下载 js 文件，并且把其执行hold 到了整个 DOM 装载完毕（DOMContentLoaded），多个defer 的 <em>script</em> 在执行时也会按照其出现的顺序来运行。最重要的是 <em>script</em> 被加上 defer 后，其不会阻塞后续 DOM 的渲染。但是因为这个 defer 只是 IE 专用，所以一般用的比较少。</p>
+<p>而我们标准的 HTML5也加入了一个异步载入 JavaScript 的属性：async，无论你对它赋什么样的值，只要它出现，它就开始异步加载 js 文件。但是，async 的异步加载会有一个比较严重的问题，那就是它忠实的践行着“载入后马上执行”这条军规，所以，虽然它并不阻塞页面的渲染，但是你也无法控制它执行的次序和时机。你可以<a href="https://coolshell.cn/asyncjs/async_test01.async.html" target="_blank" rel="noopener">看看这个示例去感受一下</a></p>
+<p>支持 async 标签的浏览器是：Firefox3.6+, Chrome 8.0+, Safari 5.0+, IE 10+, Opera 还不支持（<a href="http://caniuse.com/#feat=script-async" target="_blank" rel="noopener">来自这里</a>）。所以这个方法也不是太好。因为并不是所有的浏览器你都能行。</p>
+<h2 id="动态创建-DOM-方式"><a href="#动态创建-DOM-方式" class="headerlink" title="动态创建 DOM 方式"></a>动态创建 DOM 方式</h2><p>这种方式可能是用的最多的了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function loadjs(script_filename) &#123;</span><br><span class="line">  var script &#x3D; document.createElement(&#39;script&#39;);</span><br><span class="line">  script.setAttribute(&#39;type&#39;, &#39;text&#x2F;javascript&#39;);</span><br><span class="line">  script.setAttribute(&#39;src&#39;, &#39;script_filename);</span><br><span class="line">  script.setAttribute(&#39;id&#39;, &#39;coolshell_script_id&#39;);</span><br><span class="line"></span><br><span class="line">  script_id &#x3D; document.getElementById(&#39;coolshell_script_id&#39;);</span><br><span class="line">  if (script_id) &#123;</span><br><span class="line">    document.getElementsByTagName(&#39;head&#39;)[0].removeChild(script_id);</span><br><span class="line">  &#125;</span><br><span class="line">  document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var script &#x3D; &#39;https:&#x2F;&#x2F;coolshell.cn&#x2F;asyncjs&#x2F;alert.js&#39;;</span><br><span class="line">loadjs(script);</span><br></pre></td></tr></table></figure>
+
+<p>这种方式几乎成了标准的异步载入 js 文件的方式，这个方式的演示请参看：<a href="https://coolshell.cn/asyncjs/async_test03.html" target="_blank" rel="noopener">示例三</a>。这方式还被玩出了 JSONP 的东东，也就是我可以为 script 的 src 指定某个后台的脚本（如 PHP），而这个 PHP 返回一个 JavaScript 函数，其参数是一个 json 的字符串，返回来调用我们的预先定义好的 JavaScript 函数。你可以看一下这个示例 <a href="https://coolshell.cn/t.js" target="_blank" rel="noopener">t.js</a>(这个示例是我之前在微博征集的<a href="https://coolshell.cn/t.html" target="_blank" rel="noopener">一个异步调用的小例子</a>)。</p>
+<h2 id="按需异步载入-js"><a href="#按需异步载入-js" class="headerlink" title="按需异步载入 js"></a>按需异步载入 js</h2><p>上面那个 DOM 方式的例子解决了异步载入 JavaScript 的问题，但是没有解决我们想让他按我们指定的时机运行的问题。所以，我们只需要把上面那个 DOM 方式绑到某个事件上来就可以了。</p>
+<p>比如:<br><em>绑定在 window.onload 事件上</em>—— <a href="https://coolshell.cn/asyncjs/async_test04.html" target="_blank" rel="noopener">示例四</a></p>
+<p>你一定要比较一下示例四和示例三在执行上有什么不同，我在这两个示例中都专门用了个代码高亮的 JavaScript，看看那个代码高亮的脚本执行和我的 alert.js 的执行情况，你就知道不同了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = loadjs(<span class="string">'https://coolshell.cn/asyncjs/alert.js'</span>);</span><br></pre></td></tr></table></figure>
+
+<p><em>绑定在特定的事件上</em> —— <a href="https://coolshell.cn/asyncjs/async_test05.html" target="_blank" rel="noopener">示例五</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">"cursor: pointer"</span> <span class="attr">onclick</span>=<span class="string">"loadJS()"</span>&gt;</span>Click to load alert.js<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个示例很简单了。当你点击某个 DOM 元素，才会真正载入我们的 alert.js。</p>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>但是绑定在某个特定事件上这个事似乎又过了一点，因为只有在点击的时候才会去真正的下载 js，这又会太慢了。好了，到这里，要抛出我们的终极问题 —— <em>我们想异步的把 js 文件下载到用户的本地，但是不执行，仅当在我们想要执行的时候去执行</em>。</p>
+<p>要是我们有下面这样的方式就好了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var script &#x3D; document.createElement(&#39;script&#39;);</span><br><span class="line">script.noexecute &#x3D; true;</span><br><span class="line">script.src &#x3D; &#39;alert.js&#39;;</span><br><span class="line">document.body.appendChild(script);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 后面我们可以这么干</span><br><span class="line">script.execute();</span><br></pre></td></tr></table></figure>
+
+<p>可惜的是，这只是一个美丽的梦想，今天我们的 JavaScript 还比较原始，这个 JS 梦 还没有实现呢。</p>
+<p>所以，我们的程序员只能使用 hack的方式来搞。</p>
+<p>有的程序员使用了非标准的 script 的 type 来 cache JavaScript。如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type&#x3D;&quot;cache&#x2F;script&quot; src&#x3D;&quot;.&#x2F;alert.js&quot;&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>因为“cache/script”，这个东西根本就不能被浏览器解析，所以浏览器也就不能把 alert.js 当 JavaScript 去执行，但是他又要去下载 js 文件，所以就可以搞定了。可惜的是，webkit 严格遵从了 HTML 的标准——对于这种不认识的东西，直接删除，什么也不干。于是，我们的梦又破了。</p>
+<p>所以我们需要再 hack 一下，就像 N 多年前玩 preload 图片那样，我们可以动用 object 标签（也可以动用 iframe 标签），于是我们又下面这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function cachejs(script_filename) &#123;</span><br><span class="line">  var cache &#x3D; document.createElement(&#39;object&#39;);</span><br><span class="line">  cache.data &#x3D; script_filename;</span><br><span class="line">  cache.id &#x3D; &quot;collshell_script_cache_id&quot;;</span><br><span class="line">  cache.width: 0;</span><br><span class="line">  cache.height &#x3D; 0;</span><br><span class="line">  document.body.appendChild(cache);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，我们在最后调用一下这个函数。请参看一下相关的示例：<a href="https://coolshell.cn/asyncjs/async_test06.html" target="_blank" rel="noopener">示例六</a></p>
+<p>在 Chrome 下按 Ctrl+Shift+I，切换到network 页，你就可以看到下载了 alert.js，但是没有执行。然后我们再用示例五的方式，因为浏览器端有缓存了，不会再从服务器上下载 alert.js 了。所以就能保证执行速度了。</p>
+<p>关于 preload 这种东西你应该不会陌生了。你还可以使用 Ajax 的方式，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var xhr &#x3D; new XMLHttpRequest();</span><br><span class="line">xhr.open(&#39;GET&#39;, &#39;new.js&#39;);</span><br><span class="line">xhr.send();</span><br></pre></td></tr></table></figure>
+
+<p>到这里我就不再多说了，也不给示例了，大家可以自己试试去。</p>
+<p>最后再提两个 js，一个是 ControlJS，一个叫 HeadJS，专门用来做异步 load JavaScript 文件的。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#传统的方式"><span class="toc-number">1.</span> <span class="toc-text">传统的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#document-write方式"><span class="toc-number">2.</span> <span class="toc-text">document.write方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#script-的-defer-和-async-属性"><span class="toc-number">3.</span> <span class="toc-text">script 的 defer 和 async 属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态创建-DOM-方式"><span class="toc-number">4.</span> <span class="toc-text">动态创建 DOM 方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按需异步载入-js"><span class="toc-number">5.</span> <span class="toc-text">按需异步载入 js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多"><span class="toc-number">6.</span> <span class="toc-text">更多</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&text=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&is_video=false&description=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=JavaScript 装载和执行&body=Check out this article: r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&title=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&name=JavaScript 装载和执行&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=r0ger1tlearn.com/2018/06/20/javascript-loading-and-execution/&t=JavaScript 装载和执行" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    boyongjiong
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

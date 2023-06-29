@@ -94,11 +94,10 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: landscape
-projects_url: http://github.com/boyongjiong
 
 theme: cactus
 theme_config:
-  colorscheme: light
+  colorscheme: classic
   posts_overview:
     show_all_posts: false
     post_count: 7
@@ -107,11 +106,13 @@ theme_config:
     home: /
     about: /about/
     articles: /archives/
-    projects: projects_url
+    photograph: /photograph/
+    projects: http://github.com/boyongjiong
   social_links:
     github: https://github.com/boyongjiong
+    instagram: https://instagram.com/boyongjiong?igshid=OGQ5ZDc2ODk2ZA==
     linkedin: https://www.linkedin.com/in/yongjiong-bo-639368aa/
-    mail: boyongjiong@gmail.com
+    mail: mailto:boyongjiong@gmail.com
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

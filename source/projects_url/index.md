@@ -87,7 +87,7 @@ MediTO MDG关键病种统一数据平台：通过对专病组数据进行采集�
     * Increase cross-team communication(加强跨团队沟通)
     * Encourage open source contribution(鼓励开源代码贡献)
   6. 在学习这个的过程中，又了解了 Elasticsearch、docker 相关的知识 ，学习项目的架构设计。
-![架构设计](https://tva1.sinaimg.cn/large/a9034e0egy1gjvm9lcq2yj21dk0pcdlc.jpg)
+![架构设计](https://image.baidu.com/search/down?url=https://tva1.sinaimg.cn/large/a9034e0egy1gjvm9lcq2yj21dk0pcdlc.jpg)
 
 ### 碳云报告平台（front-report/front-report-admin）系统架构设计（服务端渲染实践 Nuxt.js && Next.js 实践）
   1. 碳云报告平台是碳云各个检测报告的产出平台，使用 front-report-admin 管理和维护各个通用组件，统一公司报告的设计规范，通过 fromt-report-admin 创建报告，并配置对应的数据源，生成报告。
